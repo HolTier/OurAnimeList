@@ -12,16 +12,14 @@ services:
       - ouram-network
     depends_on:
       - ouram-db
-    command: /bin/sh -c "dotnet ef database update --no-build && dotnet OurAM-Api.dll"
 
   ouram-db:
-    image: postgres
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: ouram
+      ACCEPT_EULA: Y
+      SA_PASSWORD: OurAM@123
     ports:
-      - "5432:5432"
+      - "1433:1433"
     networks:
       - ouram-network
 

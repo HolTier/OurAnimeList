@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>OurAM_Api</RootNamespace>
+    <UserSecretsId>820d84f7-393f-4b8d-a7fd-e369678d25ec</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+  </ItemGroup>
+
+</Project>

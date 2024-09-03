@@ -7,6 +7,7 @@
     <RootNamespace>OurAM_Api</RootNamespace>
     <UserSecretsId>820d84f7-393f-4b8d-a7fd-e369678d25ec</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>

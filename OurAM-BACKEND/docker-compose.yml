@@ -10,6 +10,9 @@ services:
       - "5000:8080"
     networks:
       - ouram-network
+    depends_on:
+      - ouram-db
+    command: /bin/sh -c "dotnet ef database update --no-build && dotnet OurAM-Api.dll"
 
   ouram-db:
     image: postgres

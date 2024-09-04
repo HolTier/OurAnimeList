@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OurAM_Api.Data;
 using OurAM_Api.Models;
+using OurAM_Api.Services;
 using System.Text;
 
 namespace OurAM_Api
@@ -16,6 +17,8 @@ namespace OurAM_Api
 
             // Add services to the container.
             builder.Services.AddControllers();
+
+            builder.Services.AddScoped<IAuthorizationServices, AuthorizationServices>();
 
             // Get JWT configuration
             var jwtConfig = builder.Configuration.GetSection("Jwt");

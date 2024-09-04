@@ -38,7 +38,7 @@ namespace OurAM_Api.Controllers
 
             var result = await _userManager.CreateAsync(user, registerModel.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
                 return Ok();
             }
@@ -59,19 +59,28 @@ namespace OurAM_Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Check if user exists
+            var user = await _userManager.FindByNameAsync(loginModel.UserName);
+            if (user == null)
+            {
+                return Unauthorized("Invalid login attempt.");
+            }
+
+            // Check if password is correct
             var result = await _signInManager.PasswordSignInAsync(loginModel.UserName, loginModel.Password, loginModel.RememberMe, false);
-
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return Ok();
+                if (result.IsLockedOut)
+                {
+                    return BadRequest("User is locked out");
+                }
+
+                return Unauthorized("Invalid login attempt.");
             }
 
-            if (result.IsLockedOut)
-            {
-                return BadRequest("User is locked out");
-            }
-
-            return Unauthorized("Invalid login attempt.");
+            // Generate JWT token
+            var token = _authorizationServices.GenerateJwtToken(user);
+            return Ok(new { token });
         }
     }
 }

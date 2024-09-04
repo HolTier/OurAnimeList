@@ -1,7 +1,9 @@
-﻿namespace OurAM_Api.Services
+﻿using OurAM_Api.Models;
+
+namespace OurAM_Api.Services
 {
     public interface IAuthorizationServices
     {
-        bool ConnectToMyAnimeListApi();
+        string GenerateJwtToken(User user);
     }
 }

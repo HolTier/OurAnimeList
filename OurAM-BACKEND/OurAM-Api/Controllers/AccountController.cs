@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OurAM_Api.DTO;
 using OurAM_Api.Models;
+using OurAM_Api.Services;
 
 namespace OurAM_Api.Controllers
 {
@@ -11,11 +12,13 @@ namespace OurAM_Api.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IAuthorizationServices _authorizationServices;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAuthorizationServices authorizationServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _authorizationServices = authorizationServices;
         }
 
         [HttpPost("register")]

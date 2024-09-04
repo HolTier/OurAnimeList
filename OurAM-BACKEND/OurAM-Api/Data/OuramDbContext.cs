@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OurAM_Api.Models;
 
 namespace OurAM_Api.Data
 {
-    public class OuramDbContext : DbContext
+    public class OuramDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         public OuramDbContext(DbContextOptions<OuramDbContext> options) : base(options)
         {

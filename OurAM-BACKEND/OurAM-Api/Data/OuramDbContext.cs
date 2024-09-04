@@ -17,6 +17,8 @@ namespace OurAM_Api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<UserAnimeList>()
                 .HasKey(ual => new { ual.UserId, ual.AnimeId });
         }

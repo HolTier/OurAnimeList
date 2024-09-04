@@ -13,7 +13,5 @@ namespace OurAM_Api.Controllers
         {
             _authorizationServices = authorizationServices;
         }
-
-        
     }
 }

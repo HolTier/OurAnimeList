@@ -6,10 +6,12 @@ namespace OurAM_Api.Services
     public class AnimeService : IAnimeService
     {
         private readonly IAnimeRepository _animeRepository;
+        private readonly IConfiguration _configuration;
 
-        public AnimeService(IAnimeRepository animeRepository)
+        public AnimeService(IAnimeRepository animeRepository, IConfiguration configuration)
         {
             _animeRepository = animeRepository;
+            _configuration = configuration;
         }
 
         public async Task AddAnimeAsync(Anime anime)

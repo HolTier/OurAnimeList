@@ -58,6 +58,7 @@ namespace OurAM_Api
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped(typeof(IAnimeRepository), typeof(AnimeRepository));
             builder.Services.AddSingleton<IAuthorizationServices, AuthorizationServices>();
+            builder.Services.AddTransient<IAnimeService, AnimeService>();
 
             // Swagger configuration
             builder.Services.AddEndpointsApiExplorer();

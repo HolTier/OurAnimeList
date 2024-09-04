@@ -12,7 +12,7 @@ namespace OurAM_Api.Data
         }
 
         public DbSet<Anime> Anime { get; set; } = null!;
-        public DbSet<User> Users { get; set; } = null!;
+        //public DbSet<User> Users { get; set; } = null!;
         public DbSet<UserAnimeList> UserAnimeLists { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

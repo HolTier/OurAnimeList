@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OurAM_Api.Data;
 using OurAM_Api.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Builder;
 
 namespace OurAM_Api
 {
@@ -21,8 +22,16 @@ namespace OurAM_Api
                 .AddEntityFrameworkStores<OuramDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Swagger
+            builder.Services.AddControllers();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.MapGet("/", () => "Hello World!");
 

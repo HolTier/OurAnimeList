@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OurAM_Api.DTO;
 using OurAM_Api.Models;
@@ -81,6 +82,20 @@ namespace OurAM_Api.Controllers
             // Generate JWT token
             var token = _authorizationServices.GenerateJwtToken(user);
             return Ok(new { token });
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok();
+        }
+
+        [HttpGet("TestJWT")]
+        [Authorize]
+        public IActionResult TestJWT()
+        {
+            return Ok("You are authorized");
         }
     }
 }

@@ -3,7 +3,9 @@
     public class Anime
     {
         public int ID { get; set; }
-        public string Title { get; set; } = null!;
+        public string TitleEN { get; set; } = null!;
+        public string TitleJP { get; set; } = null!;
+        public string Studio { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string Image { get; set; } = null!;
         public string Type { get; set; } = null!;

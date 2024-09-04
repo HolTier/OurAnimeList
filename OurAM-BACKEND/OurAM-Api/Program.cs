@@ -18,8 +18,6 @@ namespace OurAM_Api
             // Add services to the container.
             builder.Services.AddControllers();
 
-            builder.Services.AddScoped<IAuthorizationServices, AuthorizationServices>();
-
             // Get JWT configuration
             var jwtConfig = builder.Configuration.GetSection("Jwt");
             var key = Encoding.UTF8.GetBytes(jwtConfig["Key"]);
@@ -55,6 +53,11 @@ namespace OurAM_Api
             // Database connection
             builder.Services.AddDbContext<OuramDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Dependency injection
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped(typeof(IAnimeRepository), typeof(AnimeRepository));
+            builder.Services.AddSingleton<IAuthorizationServices, AuthorizationServices>();
 
             // Swagger configuration
             builder.Services.AddEndpointsApiExplorer();

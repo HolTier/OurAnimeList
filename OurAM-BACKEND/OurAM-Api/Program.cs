@@ -68,8 +68,10 @@ namespace OurAM_Api
             // Dependency injection
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped(typeof(IAnimeRepository), typeof(AnimeRepository));
+            builder.Services.AddScoped(typeof(IUserAnimeListRepository), typeof(UserAnimeListRepository));
             builder.Services.AddSingleton<IAuthorizationServices, AuthorizationServices>();
             builder.Services.AddTransient<IAnimeService, AnimeService>();
+            builder.Services.AddTransient<IUserAnimeListService, UserAnimeListService>();
 
             // Swagger configuration
             builder.Services.AddEndpointsApiExplorer();

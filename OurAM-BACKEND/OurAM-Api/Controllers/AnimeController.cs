@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using OurAM_Api.DTO;
 using OurAM_Api.Models;
 using OurAM_Api.Services;
@@ -26,7 +27,15 @@ namespace OurAM_Api.Controllers
             try
             {
                 var animeList = await _animeServices.GetAllAnimeAsync();
-                return Ok(animeList);
+
+                if (animeList.IsNullOrEmpty())
+                {
+                    return NotFound("No anime found");
+                }
+                
+                var animeListDTO = _mapper.Map<IEnumerable<AnimeDTO>>(animeList);
+
+                return Ok(animeListDTO);
             }
             catch (Exception e)
             {
@@ -54,7 +63,7 @@ namespace OurAM_Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("AddAnime")]
         [Authorize]
         public async Task<IActionResult> AddAnime(AnimeDTO animeDTO)
         {

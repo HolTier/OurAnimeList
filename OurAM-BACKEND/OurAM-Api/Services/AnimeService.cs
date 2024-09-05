@@ -53,14 +53,14 @@ namespace OurAM_Api.Services
 
         public Task<bool> ValidateAnimeDescriptionAsync(string description)
         {
-            // Description must be at least 10 characters long and at most 500 characters long
-            return Task.FromResult(description.Length >= 10 && description.Length <= 500);
+            // Description must be at least 10 characters long and at most 500 characters long or empty
+            return Task.FromResult((description.Length >= 10 && description.Length <= 500) || description.Length == 0);
         }
 
         public Task<bool> ValidateAnimeImageUrlAsync(string imageUrl)
         {
-            // Image URL must be a valid URL
-            return Task.FromResult(Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute));
+            // Image URL must be a valid URL or empty
+            return Task.FromResult((Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute)) || imageUrl.Length == 0);
         }
 
         public Task<bool> ValidateAnimeNameAsync(string name)

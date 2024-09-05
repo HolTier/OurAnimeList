@@ -1,8 +1,10 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OurAM_Api.Data;
+using OurAM_Api.Mappings;
 using OurAM_Api.Models;
 using OurAM_Api.Services;
 using System.Text;
@@ -53,6 +55,15 @@ namespace OurAM_Api
             // Database connection
             builder.Services.AddDbContext<OuramDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // AutoMapper configuration
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            builder.Services.AddSingleton(mapper);
 
             // Dependency injection
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

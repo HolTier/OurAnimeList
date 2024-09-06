@@ -1,9 +1,7 @@
-FROM node:21
+FROM node:20
 
 RUN npm install -g @angular/cli
 
-WORKDIR /
-RUN mkdir angular-app
 WORKDIR /angular-app
 
 ENV APP_NAME 'ouram-frontend'
@@ -18,3 +16,5 @@ CMD ng new $APP_NAME --routing=$ROUTING --standalone=$STANDALONE --strict=$STRIC
     && ng serve --host 0.0.0.0 --port 4200
 
 EXPOSE 4200
+
+#CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]

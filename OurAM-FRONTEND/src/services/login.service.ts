@@ -11,7 +11,7 @@ import { throwError } from 'rxjs';
 export class LoginService {
     constructor(private http: HttpClient) {}
 
-    login(username: string, password: string): Observable<any> {
+    public login(username: string, password: string): Observable<any> {
       const body = { username, password };
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 

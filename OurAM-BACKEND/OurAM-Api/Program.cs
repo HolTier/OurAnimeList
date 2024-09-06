@@ -83,6 +83,14 @@ namespace OurAM_Api
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // Configure CORS
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

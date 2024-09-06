@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'ouram-api:8080/api'
+    apiUrl: 'https://localhost:5001/api'
 }

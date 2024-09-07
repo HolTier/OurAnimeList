@@ -22,6 +22,16 @@ export class LoginService {
       );
   }
 
+  public register(username: string, email: string, password: string): Observable<any> {
+    const body = { username, email, password };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(environment.apiUrl + '/Account/register', body, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   public JWTtest(): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json',
       Authorization: 'Bearer ' + this.authService.getToken()

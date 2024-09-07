@@ -41,7 +41,9 @@ namespace OurAM_Api.Controllers
 
             if (!result.Succeeded)
             {
-                return Ok();
+                // Generate JWT token
+                var token = _authorizationServices.GenerateJwtToken(user);
+                return Ok(new { token });
             }
 
             foreach (var error in result.Errors)

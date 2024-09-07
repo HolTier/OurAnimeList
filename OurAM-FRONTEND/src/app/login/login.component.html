@@ -1,36 +1,94 @@
-<div class="login-container">
-  <h2>Login</h2>
-  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-    <div>
-      <label for="username">Username</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        required
-        [(ngModel)]="username"
-        #usernameInput="ngModel"
-      />
-      <div *ngIf="usernameInput.invalid && usernameInput.touched">
-       Username is required
-      </div>
+<div class="main-container">
+  <div class="inner-container">
+    <div class="section login-container">
+      <h2>Login</h2>
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div>
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            [(ngModel)]="username"
+            #usernameInput="ngModel"
+          />
+          <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error">
+            Username is required
+          </div>
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            [(ngModel)]="password"
+            #passwordInput="ngModel"
+          />
+          <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error">
+            Password is required
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      </form>
     </div>
 
-    <div>
-      <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        required
-        [(ngModel)]="password"
-        #passwordInput="ngModel"
-      />
-      <div *ngIf="passwordInput.invalid && passwordInput.touched">
-        Password is required
-      </div>
-    </div>
+    <div class="separator"></div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
+    <div class="section register-container">
+      <h2>Register</h2>
+      <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+        <div>
+          <label for="registerUsername">Username</label>
+          <input
+            type="text"
+            id="registerUsername"
+            name="registerUsername"
+            required
+            [(ngModel)]="registerUsername"
+            #registerUsernameInput="ngModel"
+          />
+          <div *ngIf="registerUsernameInput.invalid && registerUsernameInput.touched" class="error">
+            Username is required
+          </div>
+        </div>
+
+        <div>
+          <label for="registerEmail">Email</label>
+          <input
+            type="email"
+            id="registerEmail"
+            name="registerEmail"
+            required
+            [(ngModel)]="registerEmail"
+            #registerEmailInput="ngModel"
+          />
+          <div *ngIf="registerEmailInput.invalid && registerEmailInput.touched" class="error">
+            Email is required
+          </div>
+        </div>
+
+        <div>
+          <label for="registerPassword">Password</label>
+          <input
+            type="password"
+            id="registerPassword"
+            name="registerPassword"
+            required
+            [(ngModel)]="registerPassword"
+            #registerPasswordInput="ngModel"
+          />
+          <div *ngIf="registerPasswordInput.invalid && registerPasswordInput.touched" class="error">
+            Password is required
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="registerForm.invalid">Register</button>
+      </form>
+    </div>
+  </div>
 </div>

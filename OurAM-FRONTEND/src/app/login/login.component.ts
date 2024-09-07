@@ -6,13 +6,15 @@ import { AuthService } from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {tap, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    FlexLayoutModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],

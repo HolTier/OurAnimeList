@@ -1,88 +1,115 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Base styles for desktop */
 .main-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f5f5f5;
-  padding: 20px;
+  width: 100vw;
+  background: linear-gradient(135deg, #13161f, #252c48);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
+/* Inner Box Styling */
 .inner-container {
   display: flex;
-  border-radius: 10px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   width: 900px;
   height: 500px;
-  background: white;
+  background: rgba(255, 255, 255, 0.85); /* Make sure it's slightly transparent */
+  border: none; /* Remove any borders */
 }
 
+/* Section Styling */
 .section {
   flex: 1;
   padding: 40px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
+/* Separator Styling */
 .separator {
   width: 1px;
   background-color: #ddd;
   height: 100%;
 }
 
+/* Button Styling */
 button {
   padding: 12px 20px;
-  background-color: #007bff;
+  background-color: #ff6b6b;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 30px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #e64545;
+  transform: translateY(-2px);
 }
 
 button[disabled] {
   background-color: #ccc;
+  cursor: not-allowed;
 }
 
+/* Form Styling */
 form {
   display: flex;
   flex-direction: column;
 }
 
 form div {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 label {
   font-weight: 600;
   margin-bottom: 5px;
   display: block;
+  color: #444;
 }
 
 input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 16px;
+  background-color: #f0f4ff; /* Make sure all inputs have the same background color */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input:focus {
-  border-color: #007bff;
+  border-color: #ff6b6b;
   outline: none;
-  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 8px rgba(255, 107, 107, 0.5);
 }
 
+/* Error Message Styling */
 div.error {
-  color: red;
+  color: #e64545;
   font-size: 14px;
 }
 
+/* Header Styling */
 h2 {
   text-align: center;
+  color: #333;
+  margin-bottom: 30px;
 }

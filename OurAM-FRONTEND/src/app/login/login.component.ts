@@ -2,6 +2,7 @@ import {Component, importProvidersFrom} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule} from "@angular/common";
 import { LoginService} from "../../services/login.service";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -11,13 +12,13 @@ import { LoginService} from "../../services/login.service";
     CommonModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private authService: AuthService) {}
 
   onSubmit() {
     console.log('Username: ' + this.username);
@@ -27,6 +28,9 @@ export class LoginComponent {
     this.loginService.login(this.username, this.password).subscribe(
       response => {
         console.log('Response: ' + response);
+
+        // Save the token
+        this.authService.setToken(response.token);
       },
       error => {
         console.error('Error: ' + error);

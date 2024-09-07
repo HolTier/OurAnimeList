@@ -26,19 +26,19 @@ services:
     volumes:
       - ouram-db-data:/var/opt/mssql
 
-  ouram-angular:
-    build: ../OurAM-Frontend
-    container_name: ouram-angular
-    ports:
-      - "4200:4200"
-    volumes:
-      - ../OurAM-Frontend:/app
-    environment:
-      - STYLE=css 
-    depends_on:
-      - ouram-api
-    networks:
-      - ouram-network
+  # ouram-angular:
+  #   build: ../OurAM-Frontend
+  #   container_name: ouram-angular
+  #   ports:
+  #     - "4200:4200"
+  #   volumes:
+  #     - ../OurAM-Frontend:/app
+  #   environment:
+  #     - STYLE=css 
+  #   depends_on:
+  #     - ouram-api
+  #   networks:
+  #     - ouram-network
 
 networks:
   ouram-network:

@@ -18,4 +18,14 @@ export class AuthService {
   public removeToken() {
     localStorage.removeItem(this._tokenKey);
   }
+
+  public isAuthenticated(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    const tokenData = JSON.parse(atob(token.split('.')[1]));
+    const expirationDate = new Date(tokenData.exp * 1000);
+
+    return expirationDate > new Date();
+  }
 }

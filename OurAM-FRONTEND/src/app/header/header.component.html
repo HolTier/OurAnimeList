@@ -1,1 +1,14 @@
-<p>header works!</p>
+<mat-toolbar class="sticky-header">
+  <div class="logo">
+    <!-- Add a link to the logo -->
+    <a href="#" class="logo-link">23</a>
+  </div>
+  <nav>
+    <!-- Navigation links -->
+    <mat-button-toggle-group>
+      <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
+      <a mat-button routerLink="/about" routerLinkActive="active">About</a>
+      <a mat-button routerLink="/contact" routerLinkActive="active">Contact</a>
+    </mat-button-toggle-group>
+  </nav>
+</mat-toolbar>

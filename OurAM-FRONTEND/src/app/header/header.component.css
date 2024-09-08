@@ -1,0 +1,12 @@
+.sticky-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #212121; /* Background color */
+  padding: 10px 20px;
+  z-index: 1000; /* Ensures it stays on top */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow for depth */
+}

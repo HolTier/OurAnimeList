@@ -1,1 +1,25 @@
-<p>main-banner works!</p>
+<div class="banner-container">
+  <button class="nav-button left" (click)="previousSlide()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+
+  <!-- Main banner -->
+  <div class="banner" [ngStyle]="{'background-image': 'url(' + currentBanner.imageUrl + ')'}">
+    <div class="banner-content">
+    <!-- INFO -->
+      <div class="anime-info-left">
+        <h3>{{ currentBanner.title }}</h3>
+        <p>{{ currentBanner.description }}</p>
+      </div>
+
+      <div class="anime-info-right">
+        <h3>Rating: {{ currentBanner.episodes }}</h3>
+        <p>Episodes: {{ currentBanner.genre }}</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="nav-button right" (click)="nextSlide()">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
+</div>

@@ -38,16 +38,22 @@
 
   mat-card-content {
     padding: 16px;
-    flex-grow: 1;
+    margin-top: auto;
     position: relative;
     z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &:hover mat-card-content {
+    opacity: 1; /* Show the content on hover */
   }
 
   .anime-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    margin-top: auto;
     color: #555;
   }
 

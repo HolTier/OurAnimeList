@@ -2,5 +2,17 @@
 <div class="test">
   <app-header></app-header>
   <app-main-banner></app-main-banner>
+
+  <div class="cards-container">
+    <app-card
+      *ngFor="let anime of animeList"
+      [logoUrl]="anime.logoUrl"
+      [title]="anime.title"
+      [description]="anime.description"
+      [rating]="anime.rating"
+      [episodes]="anime.episodes"
+      (cardClick)="onAnimeSelected(anime)">
+    </app-card>
+  </div>
 </div>
 

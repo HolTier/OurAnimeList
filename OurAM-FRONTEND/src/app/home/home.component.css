@@ -2,3 +2,11 @@
   height: 1000px;
   background: linear-gradient(135deg, #13161f, #252c48);
 }
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows cards to wrap onto the next line */
+  justify-content: flex-start; /* Align cards to the left */
+  gap: 20px; /* Adds space between cards */
+  padding: 20px;
+}

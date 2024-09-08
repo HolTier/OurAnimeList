@@ -1,0 +1,63 @@
+.anime-card {
+  width: 300px; /* Fixed width for each card */
+  height: 400px;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column; /* Align content in a column */
+  position: relative;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1; /* Place the logo container behind the content */
+  }
+
+  .anime-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the logo covers the entire container */
+    transition: opacity 0.3s;
+  }
+
+  &:hover .anime-logo {
+    opacity: 0.2; /* Darken the logo on hover */
+  }
+
+  mat-card-content {
+    padding: 16px;
+    flex-grow: 1;
+    position: relative;
+    z-index: 2;
+  }
+
+  .anime-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    color: #555;
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px;
+  }
+
+  button {
+    z-index: 3;
+  }
+}

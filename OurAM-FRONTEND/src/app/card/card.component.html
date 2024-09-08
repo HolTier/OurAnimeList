@@ -1,1 +1,26 @@
-<p>card works!</p>
+<mat-card class="anime-card" (click)="onCardClick()">
+  <!-- Card Logo -->
+  <div class="logo-container">
+    <img mat-card-image class="anime-logo" [ngSrc]="logoUrl" alt="Anime Logo" fill />
+  </div>
+
+  <!-- Card Content -->
+  <mat-card-content>
+    <h3>{{ title }}</h3>
+    <p>{{ description }}</p>
+
+    <div class="anime-info">
+      <div>
+        <mat-icon>star</mat-icon> {{ rating }}/10
+      </div>
+      <div>
+        Episodes: {{ episodes }}
+      </div>
+    </div>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <button mat-button (click)="addAnime($event)">Add</button>
+  </mat-card-actions>
+</mat-card>

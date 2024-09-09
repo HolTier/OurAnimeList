@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OurAM_Api.DTO;
 using OurAM_Api.Models;
 using OurAM_Api.Services;
+using System.Security.Claims;
 
 namespace OurAM_Api.Controllers
 {
@@ -14,12 +18,14 @@ namespace OurAM_Api.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IAuthorizationServices _authorizationServices;
+        private readonly IGoogleAuthService _googleAuthService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAuthorizationServices authorizationServices)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAuthorizationServices authorizationServices, IGoogleAuthService googleAuthService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authorizationServices = authorizationServices;
+            _googleAuthService = googleAuthService;
         }
 
         [HttpPost("register")]
@@ -98,6 +104,33 @@ namespace OurAM_Api.Controllers
         public IActionResult TestJWT()
         {
             return Ok("You are authorized");
+        }
+
+        // Google authentication
+        [HttpGet("singin-google")]
+        public IActionResult SignInGoogle()
+        {
+            var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
+        [HttpGet("google-response")]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var authenticateResult = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+
+            if (!authenticateResult.Succeeded)
+            {
+                return BadRequest("Google authentication failed");
+            }
+
+            var user = await _googleAuthService.GetOrCreateUserAsync(authenticateResult);
+
+            // This line should not specify the scheme for SignInAsync
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.UserName) }, CookieAuthenticationDefaults.AuthenticationScheme)));
+
+            return Ok();
         }
     }
 }

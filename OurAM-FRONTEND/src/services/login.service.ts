@@ -32,6 +32,19 @@ export class LoginService {
       );
   }
 
+  signInWithGoogle() {
+    const auth2 = (window as any).gapi.auth2.getAuthInstance();
+    auth2.signIn().then((googleUser: any) => {
+      const id_token = googleUser.getAuthResponse().id_token;
+      this.http.post(environment + 'Account/google-signin', {id_token})
+        .subscribe(response => {
+          // Handle response from your backend
+          console.log('Google Sign-In successful:', response);
+          //this.router.navigate(['/home']); // Redirect to home or another page
+        });
+    });
+  }
+
   public JWTtest(): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json',
       Authorization: 'Bearer ' + this.authService.getToken()

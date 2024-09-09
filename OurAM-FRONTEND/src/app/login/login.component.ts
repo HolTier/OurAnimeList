@@ -10,6 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
+import {environment} from "../environment/environment";
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,10 @@ export class LoginComponent {
   registerPassword: string = '';
 
   constructor(private loginService: LoginService, private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.initGoogleSignIn();
+  }
 
   onSubmit() {
     console.log('Username: ' + this.username);
@@ -70,5 +75,25 @@ export class LoginComponent {
         return throwError(() => new Error('Something bad happened; please try again later.'));
       })
     ).subscribe();
+  }
+
+  initGoogleSignIn() {
+    (window as any).gapi.load('auth2', () => {
+      const auth2 = (window as any).gapi.auth2.init({
+        client_id: 'YOUR_GOOGLE_CLIENT_ID', // Replace with your client ID
+      });
+      (window as any).gapi.signin2.render('google-signin-button', {
+        scope: 'profile email',
+        width: 240,
+        height: 50,
+        longtitle: true,
+        theme: 'dark',
+      });
+    });
+  }
+
+
+  signInWithGoogle() {
+    this.loginService.signInWithGoogle();
   }
 }

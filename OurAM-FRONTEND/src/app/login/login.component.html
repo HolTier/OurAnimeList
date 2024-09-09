@@ -97,6 +97,10 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
           Register
         </button>
+
+        <div class="google-login">
+          <button mat-raised-button color="primary" (click)="signInWithGoogle()">Login with Google</button>
+        </div>
       </form>
     </div>
   </div>

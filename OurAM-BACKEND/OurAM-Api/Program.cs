@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +25,14 @@ namespace OurAM_Api
             var jwtConfig = builder.Configuration.GetSection("Jwt");
             var key = Encoding.UTF8.GetBytes(jwtConfig["Key"]);
 
-            // Configure JWT authentication
+            // Configure authentication
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
+            .AddCookie()
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -43,7 +46,11 @@ namespace OurAM_Api
                     ValidAudience = jwtConfig["Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
-            });
+            }).AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            }); ;
 
             builder.Services.AddAuthorization();
 
@@ -55,13 +62,13 @@ namespace OurAM_Api
             // Database connection
             builder.Services.AddDbContext<OuramDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            
             // AutoMapper configuration
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
-
+            
             IMapper mapper = mapperConfig.CreateMapper();
             builder.Services.AddSingleton(mapper);
 
@@ -70,6 +77,7 @@ namespace OurAM_Api
             builder.Services.AddScoped(typeof(IAnimeRepository), typeof(AnimeRepository));
             builder.Services.AddScoped(typeof(IUserAnimeListRepository), typeof(UserAnimeListRepository));
             builder.Services.AddSingleton<IAuthorizationServices, AuthorizationServices>();
+            builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
             builder.Services.AddTransient<IAnimeService, AnimeService>();
             builder.Services.AddTransient<IUserAnimeListService, UserAnimeListService>();
 

@@ -8,7 +8,7 @@
       *ngFor="let anime of animeList"
       [logoUrl]="anime.imageUrl"
       [title]="anime.titleEN"
-      [description]="anime.shortDescription"
+      [shortDescription]="anime.shortDescription"
       [rating]="anime.rating"
       [episodes]="anime.episodes"
       (cardClick)="onAnimeSelected(anime)">

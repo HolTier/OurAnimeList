@@ -23,7 +23,7 @@ export class CardComponent {
   // Inputs to receive data
   @Input() logoUrl: string = '';
   @Input() title: string = '';
-  @Input() description: string = '';
+  @Input() shortDescription: string = '';
   @Input() rating: number = 0;
   @Input() episodes: number = 0;
 

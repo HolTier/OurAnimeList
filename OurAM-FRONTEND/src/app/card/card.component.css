@@ -49,12 +49,19 @@
     opacity: 1; /* Show the content on hover */
   }
 
+  .anime-description {
+    font-size: 14px;
+    line-height: 1.5;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+  }
+
   .anime-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: auto;
-    color: #555;
+    color: lightgray;
   }
 
   mat-card-actions {

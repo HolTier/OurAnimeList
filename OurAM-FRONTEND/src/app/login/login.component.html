@@ -3,9 +3,10 @@
     <div class="section login-container">
       <h2>Login</h2>
       <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-        <div>
-          <label for="username">Username</label>
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
           <input
+            matInput
             type="text"
             id="username"
             name="username"
@@ -13,14 +14,15 @@
             [(ngModel)]="username"
             #usernameInput="ngModel"
           />
-          <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error">
+          <mat-error *ngIf="usernameInput.invalid && usernameInput.touched">
             Username is required
-          </div>
-        </div>
+          </mat-error>
+        </mat-form-field>
 
-        <div>
-          <label for="password">Password</label>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
           <input
+            matInput
             type="password"
             id="password"
             name="password"
@@ -28,12 +30,14 @@
             [(ngModel)]="password"
             #passwordInput="ngModel"
           />
-          <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error">
+          <mat-error *ngIf="passwordInput.invalid && passwordInput.touched">
             Password is required
-          </div>
-        </div>
+          </mat-error>
+        </mat-form-field>
 
-        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
+          Login
+        </button>
       </form>
     </div>
 
@@ -42,9 +46,10 @@
     <div class="section register-container">
       <h2>Register</h2>
       <form (ngSubmit)="onRegister()" #registerForm="ngForm">
-        <div>
-          <label for="registerUsername">Username</label>
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
           <input
+            matInput
             type="text"
             id="registerUsername"
             name="registerUsername"
@@ -52,14 +57,15 @@
             [(ngModel)]="registerUsername"
             #registerUsernameInput="ngModel"
           />
-          <div *ngIf="registerUsernameInput.invalid && registerUsernameInput.touched" class="error">
+          <mat-error *ngIf="registerUsernameInput.invalid && registerUsernameInput.touched">
             Username is required
-          </div>
-        </div>
+          </mat-error>
+        </mat-form-field>
 
-        <div>
-          <label for="registerEmail">Email</label>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
           <input
+            matInput
             type="email"
             id="registerEmail"
             name="registerEmail"
@@ -67,14 +73,15 @@
             [(ngModel)]="registerEmail"
             #registerEmailInput="ngModel"
           />
-          <div *ngIf="registerEmailInput.invalid && registerEmailInput.touched" class="error">
+          <mat-error *ngIf="registerEmailInput.invalid && registerEmailInput.touched">
             Email is required
-          </div>
-        </div>
+          </mat-error>
+        </mat-form-field>
 
-        <div>
-          <label for="registerPassword">Password</label>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
           <input
+            matInput
             type="password"
             id="registerPassword"
             name="registerPassword"
@@ -82,12 +89,14 @@
             [(ngModel)]="registerPassword"
             #registerPasswordInput="ngModel"
           />
-          <div *ngIf="registerPasswordInput.invalid && registerPasswordInput.touched" class="error">
+          <mat-error *ngIf="registerPasswordInput.invalid && registerPasswordInput.touched">
             Password is required
-          </div>
-        </div>
+          </mat-error>
+        </mat-form-field>
 
-        <button type="submit" [disabled]="registerForm.invalid">Register</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+          Register
+        </button>
       </form>
     </div>
   </div>

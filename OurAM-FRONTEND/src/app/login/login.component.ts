@@ -7,6 +7,9 @@ import {Router} from "@angular/router";
 import {tap, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +17,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   imports: [
     FormsModule,
     CommonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    MatButton
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],

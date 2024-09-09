@@ -1,3 +1,4 @@
+/* General Styles */
 body, html {
   margin: 0;
   padding: 0;
@@ -5,7 +6,7 @@ body, html {
   height: 100%;
 }
 
-/* Base styles for desktop */
+/* Main Container Adjustments */
 .main-container {
   display: flex;
   justify-content: center;
@@ -13,103 +14,95 @@ body, html {
   height: 100vh;
   width: 100vw;
   background: linear-gradient(135deg, #13161f, #252c48);
-  box-sizing: border-box;
-  overflow: hidden;
+  padding: 20px; /* Add padding for better spacing */
 }
 
-/* Inner Box Styling */
+/* Inner Container Styling */
 .inner-container {
   display: flex;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   width: 900px;
-  height: 500px;
-  background: rgba(255, 255, 255, 0.85); /* Make sure it's slightly transparent */
-  border: none; /* Remove any borders */
+  background: #ffffff; /* Neutral white background */
+  padding: 20px;
 }
 
 /* Section Styling */
 .section {
   flex: 1;
-  padding: 40px;
+  padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center; /* Center-align content */
 }
 
 /* Separator Styling */
 .separator {
-  width: 1px;
+  width: 2px;
   background-color: #ddd;
   height: 100%;
 }
 
-/* Button Styling */
-button {
-  padding: 12px 20px;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-button:hover {
-  background-color: #e64545;
-  transform: translateY(-2px);
-}
-
-button[disabled] {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Form Styling */
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form div {
-  margin-bottom: 20px;
-}
-
-label {
-  font-weight: 600;
-  margin-bottom: 5px;
-  display: block;
-  color: #444;
-}
-
-input {
+/* Input Field Styling */
+mat-form-field {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
+  margin-bottom: 20px;
   border-radius: 8px;
-  font-size: 16px;
-  background-color: #f0f4ff; /* Make sure all inputs have the same background color */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input:focus {
-  border-color: #ff6b6b;
-  outline: none;
-  box-shadow: 0 0 8px rgba(255, 107, 107, 0.5);
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: #f4f6fb; /* Light gray for better contrast */
+  border-radius: 8px;
+}
+
+.mat-input-element {
+  padding: 10px; /* Adds padding for a more spacious look */
+  border-radius: 8px; /* Rounded corners for the input */
+}
+
+.mat-form-field-outline {
+  border-radius: 8px; /* Ensures the outline has rounded corners */
+}
+
+/* Label Styling */
+.mat-form-field-label {
+  color: #555; /* Subtle label color */
+}
+
+/* Button Styling */
+button[mat-raised-button] {
+  margin-top: 10px; /* Adjust margin for better spacing */
+  background-color: #ff6b6b;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 24px;
+  padding: 10px 24px;
+  width: 150px; /* Uniform button width for consistency */
+  align-self: center; /* Center-align button */
+}
+
+button[mat-raised-button]:hover {
+  background-color: #e64545;
+}
+
+button[mat-raised-button]:disabled {
+  background-color: gray;
 }
 
 /* Error Message Styling */
-div.error {
-  color: #e64545;
-  font-size: 14px;
+.mat-error {
+  color: #ff6b6b; /* Red error message color */;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  text-align: left; /* Align error messages to the left */
 }
 
 /* Header Styling */
 h2 {
   text-align: center;
   color: #333;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }

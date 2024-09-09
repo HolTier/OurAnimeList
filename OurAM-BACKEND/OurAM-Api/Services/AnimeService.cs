@@ -59,7 +59,7 @@ namespace OurAM_Api.Services
 
         public Task<bool> ValidateAnimeImageUrlAsync(string imageUrl)
         {
-            // Image URL must be a valid URL or empty
+            // ImageUrl URL must be a valid URL or empty
             return Task.FromResult((Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute)) || imageUrl.Length == 0);
         }
 
@@ -84,7 +84,7 @@ namespace OurAM_Api.Services
             return Task.FromResult(
                 ValidateAnimeNameAsync(anime.TitleEN).Result &&
                 ValidateAnimeDescriptionAsync(anime.Description).Result &&
-                ValidateAnimeImageUrlAsync(anime.Image).Result &&
+                ValidateAnimeImageUrlAsync(anime.ImageUrl).Result &&
                 ValidateRepeatedAnimeAsync(anime.TitleEN, anime.Studio).Result
             );
         }

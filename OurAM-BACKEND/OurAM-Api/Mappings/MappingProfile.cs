@@ -11,6 +11,8 @@ namespace OurAM_Api.Mappings
             // Anime
             CreateMap<Anime, AnimeDTO>();
             CreateMap<AnimeDTO, Anime>();
+            CreateMap<Anime, AnimeCardDTO>();
+            CreateMap<AnimeCardDTO, Anime>();
 
             // UserAnimeList
             CreateMap<UserAnimeList, UserAnimeListDTO>();

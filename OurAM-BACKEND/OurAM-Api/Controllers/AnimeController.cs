@@ -89,5 +89,27 @@ namespace OurAM_Api.Controllers
             _animeServices.UpdateAnime(anime);
             return Ok("Anime updated successfully");
         }
+
+        [HttpGet("GetAnimeCard")]
+        public async Task<IActionResult> GetAnimeCard()
+        {
+            try
+            {
+                var animeList = await _animeServices.GetAllAnimeAsync();
+
+                if (animeList.IsNullOrEmpty())
+                {
+                    return NotFound("No anime found");
+                }
+
+                var animeCardList = _mapper.Map<IEnumerable<AnimeCardDTO>>(animeList);
+
+                return Ok(animeCardList);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

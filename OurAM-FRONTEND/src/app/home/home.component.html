@@ -6,9 +6,9 @@
   <div class="cards-container">
     <app-card
       *ngFor="let anime of animeList"
-      [logoUrl]="anime.logoUrl"
-      [title]="anime.title"
-      [description]="anime.description"
+      [logoUrl]="anime.imageUrl"
+      [title]="anime.titleEN"
+      [description]="anime.shortDescription"
       [rating]="anime.rating"
       [episodes]="anime.episodes"
       (cardClick)="onAnimeSelected(anime)">

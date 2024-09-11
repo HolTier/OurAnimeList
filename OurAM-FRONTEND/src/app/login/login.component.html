@@ -98,10 +98,16 @@
           Register
         </button>
 
-        <div class="google-login">
-          <button mat-raised-button color="primary" (click)="signInWithGoogle()">Login with Google</button>
-        </div>
+
       </form>
     </div>
+
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <asl-google-signin-button
+      type='standard'
+      size='medium'
+      shape="pill">
+    </asl-google-signin-button>
+
   </div>
 </div>

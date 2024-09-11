@@ -11,6 +11,12 @@ import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {environment} from "../environment/environment";
+import {
+  GoogleLoginProvider,
+  GoogleSigninButtonModule,
+  SocialAuthService,
+  SocialUser
+} from "@abacritt/angularx-social-login";
 
 @Component({
   selector: 'app-login',
@@ -23,7 +29,8 @@ import {environment} from "../environment/environment";
     MatLabel,
     MatInput,
     MatError,
-    MatButton
+    MatButton,
+    GoogleSigninButtonModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -34,11 +41,21 @@ export class LoginComponent {
   registerUsername: string = '';
   registerEmail: string = '';
   registerPassword: string = '';
+  user: SocialUser | null;
 
-  constructor(private loginService: LoginService, private authService: AuthService, private router: Router) {}
+  constructor(private loginService: LoginService, private authService: AuthService, private router: Router, private socialAuthService: SocialAuthService) {
+    this.user = null;
+    this.socialAuthService.authState.subscribe((user) => {
+      console.log('User: ' + user);
+      this.user = user;
+    });
+  }
 
   ngOnInit() {
-    this.initGoogleSignIn();
+    this.socialAuthService.authState.subscribe((user) => {
+      console.log('User: ' + user);
+      this.user = user;
+    });
   }
 
   onSubmit() {
@@ -77,23 +94,11 @@ export class LoginComponent {
     ).subscribe();
   }
 
-  initGoogleSignIn() {
-    (window as any).gapi.load('auth2', () => {
-      const auth2 = (window as any).gapi.auth2.init({
-        client_id: 'YOUR_GOOGLE_CLIENT_ID', // Replace with your client ID
-      });
-      (window as any).gapi.signin2.render('google-signin-button', {
-        scope: 'profile email',
-        width: 240,
-        height: 50,
-        longtitle: true,
-        theme: 'dark',
-      });
-    });
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => console.log(('User: ' + x)));
   }
 
-
-  signInWithGoogle() {
-    this.loginService.signInWithGoogle();
+  signOut(): void {
+    this.socialAuthService.signOut().then(() => console.log('User signed out'));
   }
 }

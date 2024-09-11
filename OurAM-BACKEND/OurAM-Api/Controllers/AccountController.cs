@@ -158,15 +158,20 @@ namespace OurAM_Api.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
+                if (!result.Succeeded)
                 { 
-                    // Generate JWT token
-                    var token = _authorizationServices.GenerateJwtToken(user);
-                    return Ok(new { token });
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    
+                    return BadRequest(ModelState);
                 }
             }
 
-            return BadRequest("Something went wrong");
+            // Generate JWT token
+            var token = _authorizationServices.GenerateJwtToken(user);
+            return Ok(new { token });
         }
 
         [HttpGet("google-response")]

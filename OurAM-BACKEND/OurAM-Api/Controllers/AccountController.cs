@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Google.Apis.Auth;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +20,15 @@ namespace OurAM_Api.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IAuthorizationServices _authorizationServices;
         private readonly IGoogleAuthService _googleAuthService;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAuthorizationServices authorizationServices, IGoogleAuthService googleAuthService)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAuthorizationServices authorizationServices, IGoogleAuthService googleAuthService, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authorizationServices = authorizationServices;
             _googleAuthService = googleAuthService;
+            _configuration = configuration;
         }
 
         [HttpPost("register")]
@@ -41,6 +44,7 @@ namespace OurAM_Api.Controllers
                 UserName = registerModel.Username,
                 Email = registerModel.Email,
                 CreatedAt = DateTime.Now,
+                Provider = "Local"
             };
 
             var result = await _userManager.CreateAsync(user, registerModel.Password);
@@ -71,6 +75,12 @@ namespace OurAM_Api.Controllers
             // Check if user exists
             var user = await _userManager.FindByNameAsync(loginModel.UserName);
             if (user == null)
+            {
+                return Unauthorized("Invalid login attempt.");
+            }
+
+            // Check if provider is local
+            if (user.Provider != "Local")
             {
                 return Unauthorized("Invalid login attempt.");
             }
@@ -107,11 +117,56 @@ namespace OurAM_Api.Controllers
         }
 
         // Google authentication
-        [HttpGet("singin-google")]
-        public IActionResult SignInGoogle()
+        [HttpPost("singin-google")]
+        public async Task<IActionResult> SignInGoogle([FromBody] GoogleAccountDTO googleAccount)
         {
-            var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
-            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Check if google account isn't a null
+            if (googleAccount == null)
+            {
+                return BadRequest("Invalid login attempt");
+            }
+
+            // Validate google account by token id
+            GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings();
+
+            settings.Audience = new List<string>() { _configuration["Authentication:Google:ClientId"] };
+
+            GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(googleAccount.TokenId, settings);
+
+            // Check if google account is valid
+            if (payload == null)
+            {
+                return BadRequest("Invalid login attempt");
+            }
+
+            // Check if user exists by email
+            var user = await _userManager.FindByEmailAsync(payload.Email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    UserName = payload.Email,
+                    Email = payload.Email,
+                    CreatedAt = DateTime.Now,
+                    Avatar = payload.Picture,
+                    Provider = "Google"
+                };
+
+                var result = await _userManager.CreateAsync(user);
+                if (result.Succeeded)
+                { 
+                    // Generate JWT token
+                    var token = _authorizationServices.GenerateJwtToken(user);
+                    return Ok(new { token });
+                }
+            }
+
+            return BadRequest("Something went wrong");
         }
 
         [HttpGet("google-response")]

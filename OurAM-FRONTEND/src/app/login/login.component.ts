@@ -53,7 +53,7 @@ export class LoginComponent {
 
   ngOnInit() {
     this.socialAuthService.authState.subscribe((user) => {
-      console.log('User: ' + user);
+      console.log('User: ' + user.idToken);
       this.user = user;
     });
   }
@@ -92,13 +92,5 @@ export class LoginComponent {
         return throwError(() => new Error('Something bad happened; please try again later.'));
       })
     ).subscribe();
-  }
-
-  signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => console.log(('User: ' + x)));
-  }
-
-  signOut(): void {
-    this.socialAuthService.signOut().then(() => console.log('User signed out'));
   }
 }

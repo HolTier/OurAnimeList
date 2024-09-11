@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import { catchError, shareReplay } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import {SocialUser} from "@abacritt/angularx-social-login";
 
 @Injectable({
     providedIn: 'root'
@@ -32,25 +33,11 @@ export class LoginService {
       );
   }
 
-  signInWithGoogle() {
-    const auth2 = (window as any).gapi.auth2.getAuthInstance();
-    auth2.signIn().then((googleUser: any) => {
-      const id_token = googleUser.getAuthResponse().id_token;
-      this.http.post(environment + 'Account/google-signin', {id_token})
-        .subscribe(response => {
-          // Handle response from your backend
-          console.log('Google Sign-In successful:', response);
-          //this.router.navigate(['/home']); // Redirect to home or another page
-        });
-    });
-  }
+  public googleLogin(user: SocialUser): Observable<any> {
+    const body = { tokenId: user.idToken, email: user.email, name: user.name, avatar: user.photoUrl, provider: 'Google' };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  public JWTtest(): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + this.authService.getToken()
-    });
-
-    return this.http.get(environment.apiUrl + '/Account/TestJWT', { headers })
+    return this.http.post(environment.apiUrl + '/Account/singin-google', body, { headers })
       .pipe(
         catchError(this.handleError)
       );

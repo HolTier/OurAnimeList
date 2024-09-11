@@ -41,20 +41,16 @@ export class LoginComponent {
   registerUsername: string = '';
   registerEmail: string = '';
   registerPassword: string = '';
-  user: SocialUser | null;
+  user: SocialUser | null = null;
 
   constructor(private loginService: LoginService, private authService: AuthService, private router: Router, private socialAuthService: SocialAuthService) {
-    this.user = null;
-    this.socialAuthService.authState.subscribe((user) => {
-      console.log('User: ' + user);
-      this.user = user;
-    });
   }
 
   ngOnInit() {
     this.socialAuthService.authState.subscribe((user) => {
       console.log('User: ' + user.idToken);
       this.user = user;
+      this.validateGoogleLogin(user);
     });
   }
 
@@ -82,6 +78,20 @@ export class LoginComponent {
 
     // Call the login service
     this.loginService.register(this.registerUsername, this.registerEmail, this.registerPassword).pipe(
+      tap(response => {
+        console.log('Response: ' + response);
+        this.authService.setToken(response.token);
+        this.router.navigate(['/home']).then(r => console.log('Navigated to home'));
+      }),
+      catchError(error => {
+        console.error('Error: ' + error);
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+      })
+    ).subscribe();
+  }
+
+  validateGoogleLogin(user: SocialUser) {
+    this.loginService.googleLogin(user).pipe(
       tap(response => {
         console.log('Response: ' + response);
         this.authService.setToken(response.token);

@@ -18,7 +18,7 @@ interface Banner {
     CommonModule
   ],
   templateUrl: './main-banner.component.html',
-  styleUrl: './main-banner.component.css'
+  styleUrl: './main-banner.component.scss'
 })
 export class MainBannerComponent {
 

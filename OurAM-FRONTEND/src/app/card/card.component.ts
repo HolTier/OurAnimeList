@@ -17,7 +17,7 @@ import {MatButton} from "@angular/material/button";
     MatButton
   ],
   templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  styleUrl: './card.component.scss'
 })
 export class CardComponent {
   // Inputs to receive data

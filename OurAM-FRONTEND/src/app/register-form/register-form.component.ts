@@ -23,7 +23,7 @@ import {Router} from "@angular/router";
     NgIf
   ],
   templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.css', '../login/login.component.css']
+  styleUrls: ['./register-form.component.scss', '../login/login.component.scss']
 })
 export class RegisterFormComponent {
   constructor(private loginService: LoginService, private authService: AuthService, private router: Router) {

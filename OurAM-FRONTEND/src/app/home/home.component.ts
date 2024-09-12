@@ -19,7 +19,7 @@ import {catchError} from "rxjs/operators";
     NgForOf
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   animeList: AnimeCardInterface[] = [];

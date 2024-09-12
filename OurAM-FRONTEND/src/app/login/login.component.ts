@@ -37,7 +37,7 @@ import {RegisterFormComponent} from "../register-form/register-form.component";
     RegisterFormComponent
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   isLoginMode: boolean = true;

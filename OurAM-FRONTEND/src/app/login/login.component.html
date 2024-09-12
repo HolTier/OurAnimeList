@@ -1,107 +1,11 @@
 <div class="main-container">
   <div class="inner-container">
-    <div class="section login-container">
-      <h2>Login</h2>
-      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-        <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input
-            matInput
-            type="text"
-            id="username"
-            name="username"
-            required
-            [(ngModel)]="username"
-            #usernameInput="ngModel"
-          />
-          <mat-error *ngIf="usernameInput.invalid && usernameInput.touched">
-            Username is required
-          </mat-error>
-        </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            type="password"
-            id="password"
-            name="password"
-            required
-            [(ngModel)]="password"
-            #passwordInput="ngModel"
-          />
-          <mat-error *ngIf="passwordInput.invalid && passwordInput.touched">
-            Password is required
-          </mat-error>
-        </mat-form-field>
+    <!-- Login and Register forms -->
+    <app-login-form *ngIf="isLoginMode"></app-login-form>
+    <app-register-form *ngIf="!isLoginMode"></app-register-form>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-          Login
-        </button>
-      </form>
-    </div>
-
-    <div class="separator"></div>
-
-    <div class="section register-container">
-      <h2>Register</h2>
-      <form (ngSubmit)="onRegister()" #registerForm="ngForm">
-        <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input
-            matInput
-            type="text"
-            id="registerUsername"
-            name="registerUsername"
-            required
-            [(ngModel)]="registerUsername"
-            #registerUsernameInput="ngModel"
-          />
-          <mat-error *ngIf="registerUsernameInput.invalid && registerUsernameInput.touched">
-            Username is required
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
-          <input
-            matInput
-            type="email"
-            id="registerEmail"
-            name="registerEmail"
-            required
-            [(ngModel)]="registerEmail"
-            #registerEmailInput="ngModel"
-          />
-          <mat-error *ngIf="registerEmailInput.invalid && registerEmailInput.touched">
-            Email is required
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            type="password"
-            id="registerPassword"
-            name="registerPassword"
-            required
-            [(ngModel)]="registerPassword"
-            #registerPasswordInput="ngModel"
-          />
-          <mat-error *ngIf="registerPasswordInput.invalid && registerPasswordInput.touched">
-            Password is required
-          </mat-error>
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
-          Register
-        </button>
-
-
-      </form>
-    </div>
-
+    <!-- Google Sign-In button -->
     <script src="https://accounts.google.com/gsi/client" async></script>
     <asl-google-signin-button
       type='standard'

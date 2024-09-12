@@ -17,6 +17,8 @@ import {
   SocialAuthService,
   SocialUser
 } from "@abacritt/angularx-social-login";
+import {LoginFormComponent} from "../login-form/login-form.component";
+import {RegisterFormComponent} from "../register-form/register-form.component";
 
 @Component({
   selector: 'app-login',
@@ -30,17 +32,15 @@ import {
     MatInput,
     MatError,
     MatButton,
-    GoogleSigninButtonModule
+    GoogleSigninButtonModule,
+    LoginFormComponent,
+    RegisterFormComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  registerUsername: string = '';
-  registerEmail: string = '';
-  registerPassword: string = '';
+  isLoginMode: boolean = true;
   user: SocialUser | null = null;
 
   constructor(private loginService: LoginService, private authService: AuthService, private router: Router, private socialAuthService: SocialAuthService) {
@@ -52,42 +52,6 @@ export class LoginComponent {
       this.user = user;
       this.validateGoogleLogin(user);
     });
-  }
-
-  onSubmit() {
-    console.log('Username: ' + this.username);
-    console.log('Password: ' + this.password);
-
-    // Call the login service
-    this.loginService.login(this.username, this.password).pipe(
-      tap(response => {
-        console.log('Response: ' + response);
-        this.authService.setToken(response.token);
-        this.router.navigate(['/home']).then(r => console.log('Navigated to home'));
-      }),
-      catchError(error => {
-        console.error('Error: ' + error);
-        return throwError(() => new Error('Something bad happened; please try again later.'));
-      })
-    ).subscribe();
-  }
-
-  onRegister() {
-    console.log('Register Username: ' + this.registerUsername);
-    console.log('Register Password: ' + this.registerPassword);
-
-    // Call the login service
-    this.loginService.register(this.registerUsername, this.registerEmail, this.registerPassword).pipe(
-      tap(response => {
-        console.log('Response: ' + response);
-        this.authService.setToken(response.token);
-        this.router.navigate(['/home']).then(r => console.log('Navigated to home'));
-      }),
-      catchError(error => {
-        console.error('Error: ' + error);
-        return throwError(() => new Error('Something bad happened; please try again later.'));
-      })
-    ).subscribe();
   }
 
   validateGoogleLogin(user: SocialUser) {

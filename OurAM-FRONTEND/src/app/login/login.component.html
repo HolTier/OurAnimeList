@@ -7,10 +7,10 @@
 
     <!-- Toggle between Login and Register forms -->
     <span class="switch">
-      <span *ngIf="isLoginMode">Don't have an account? </span>
-      <span *ngIf="!isLoginMode">Already have an account? </span>
+      <span *ngIf="isLoginMode">Don't have an account?&nbsp;</span>
+      <span *ngIf="!isLoginMode">Already have an account?&nbsp;</span>
       <span class="switch-mode" (click)="onSwitchMode()">
-        {{ isLoginMode ? 'Register' : 'Login' }}
+        {{ isLoginMode ? 'Register' : ' Login' }}
       </span>
     </span>
 

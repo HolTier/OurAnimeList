@@ -131,47 +131,54 @@ namespace OurAM_Api.Controllers
                 return BadRequest("Invalid login attempt");
             }
 
-            // Validate google account by token id
-            GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings();
-
-            settings.Audience = new List<string>() { _configuration["Authentication:Google:ClientId"] };
-
-            GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(googleAccount.TokenId, settings);
-
-            // Check if google account is valid
-            if (payload == null)
+            try
             {
-                return BadRequest("Invalid login attempt");
-            }
+                // Validate google account by token id
+                var settings = new GoogleJsonWebSignature.ValidationSettings();
 
-            // Check if user exists by email
-            var user = await _userManager.FindByEmailAsync(payload.Email);
-            if (user == null)
-            {
-                user = new User
+                settings.Audience = new List<string>() { _configuration["Authentication:Google:ClientId"] };
+
+                GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(googleAccount.TokenId, settings);
+
+                // Check if google account is valid
+                if (payload == null)
                 {
-                    UserName = payload.Email,
-                    Email = payload.Email,
-                    CreatedAt = DateTime.Now,
-                    Avatar = payload.Picture,
-                    Provider = "Google"
-                };
-
-                var result = await _userManager.CreateAsync(user);
-                if (!result.Succeeded)
-                { 
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                    
-                    return BadRequest(ModelState);
+                    return BadRequest("Invalid login attempt");
                 }
-            }
 
-            // Generate JWT token
-            var token = _authorizationServices.GenerateJwtToken(user);
-            return Ok(new { token });
+                // Check if user exists by email
+                var user = await _userManager.FindByEmailAsync(payload.Email);
+                if (user == null)
+                {
+                    user = new User
+                    {
+                        UserName = payload.Email,
+                        Email = payload.Email,
+                        CreatedAt = DateTime.Now,
+                        Avatar = payload.Picture,
+                        Provider = "Google"
+                    };
+
+                    var result = await _userManager.CreateAsync(user);
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+
+                        return BadRequest(ModelState);
+                    }
+                }
+
+                // Generate JWT token
+                var token = _authorizationServices.GenerateJwtToken(user);
+                return Ok(new { token });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("google-response")]

@@ -13,6 +13,8 @@ services:
       - ouram-network
     depends_on:
       - ouram-db
+    volumes:
+      - ./data-protection-keys:/keys
 
   ouram-db:
     image: mcr.microsoft.com/mssql/server:2022-latest

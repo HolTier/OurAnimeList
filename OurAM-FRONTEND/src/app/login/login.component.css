@@ -20,9 +20,11 @@ body, html {
 /* Inner Container Styling */
 .inner-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  width: 900px;
+  width: 400px;
   background: #ffffff; /* Neutral white background */
   padding: 20px;
 }
@@ -30,7 +32,7 @@ body, html {
 /* Section Styling */
 .section {
   flex: 1;
-  padding: 20px;
+  padding: 10px 10px 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -38,37 +40,23 @@ body, html {
   align-items: center; /* Center-align content */
 }
 
-/* Separator Styling */
-.separator {
-  width: 2px;
-  background-color: #ddd;
-  height: 100%;
-}
-
 /* Input Field Styling */
 mat-form-field {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 8px;
+  background-color: white !important;
 }
 
-.mat-form-field-appearance-fill .mat-form-field-flex {
-  background-color: #f4f6fb; /* Light gray for better contrast */
+.mat-focused .mat-form-field-label {
+  color: #ff6b6b; /* Change label color when focused */
+}
+
+.custom-login-mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
   border-radius: 8px;
-}
-
-.mat-input-element {
-  padding: 10px; /* Adds padding for a more spacious look */
-  border-radius: 8px; /* Rounded corners for the input */
-}
-
-.mat-form-field-outline {
-  border-radius: 8px; /* Ensures the outline has rounded corners */
-}
-
-/* Label Styling */
-.mat-form-field-label {
-  color: #555; /* Subtle label color */
+  background-color: white !important;
 }
 
 /* Button Styling */
@@ -79,7 +67,7 @@ button[mat-raised-button] {
   font-weight: bold;
   border-radius: 24px;
   padding: 10px 24px;
-  width: 150px; /* Uniform button width for consistency */
+  width: 100%; /* Uniform button width for consistency */
   align-self: center; /* Center-align button */
 }
 
@@ -92,12 +80,14 @@ button[mat-raised-button]:disabled {
 }
 
 /* Error Message Styling */
-.mat-error {
-  color: #ff6b6b; /* Red error message color */;
-  font-size: 12px;
-  margin-top: -10px;
-  margin-bottom: 10px;
-  text-align: left; /* Align error messages to the left */
+mat-error {
+  color: red; /* Red error message color */;
+}
+
+/* Google Button Styling */
+asl-google-signin-button {
+  align-self: center; /* Center-align button */
+
 }
 
 /* Header Styling */
@@ -105,4 +95,50 @@ h2 {
   text-align: center;
   color: #333;
   margin-bottom: 20px;
+}
+
+/* Switch login/register */
+.switch {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: right;
+  margin-top: 0;
+  margin-bottom: 20px;
+  margin-right: 40px;
+  width: 100%;
+}
+
+
+.switch-mode {
+  color: #ff6b6b;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.switch-mode:hover {
+  color: #e64545;
+}
+
+/* Separator Styling */
+.separator{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 20px 0;
+  color: #666;
+  font-size: 14px;
+  gap: 10px;
+}
+
+.separator .line{
+  flex: 1;
+  height: 1px;
+  background-color: #666;
+}
+
+.separator .text{
+  padding: 0 10px;
+  white-space: nowrap;
 }

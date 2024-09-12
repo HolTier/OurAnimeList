@@ -5,12 +5,31 @@
     <app-login-form *ngIf="isLoginMode"></app-login-form>
     <app-register-form *ngIf="!isLoginMode"></app-register-form>
 
+    <!-- Toggle between Login and Register forms -->
+    <span class="switch">
+      <span *ngIf="isLoginMode">Don't have an account? </span>
+      <span *ngIf="!isLoginMode">Already have an account? </span>
+      <span class="switch-mode" (click)="onSwitchMode()">
+        {{ isLoginMode ? 'Register' : 'Login' }}
+      </span>
+    </span>
+
+    <!-- Separator -->
+    <div class="separator">
+      <span class="line"></span>
+      <span class="text">More login methods</span>
+      <span class="line"></span>
+    </div>
+
     <!-- Google Sign-In button -->
     <script src="https://accounts.google.com/gsi/client" async></script>
     <asl-google-signin-button
       type='standard'
-      size='medium'
-      shape="pill">
+      size='large'
+      shape='pill'
+      theme='outline'
+      [width]="width"
+    >
     </asl-google-signin-button>
 
   </div>

@@ -42,6 +42,7 @@ import {RegisterFormComponent} from "../register-form/register-form.component";
 export class LoginComponent {
   isLoginMode: boolean = true;
   user: SocialUser | null = null;
+  width = 370;
 
   constructor(private loginService: LoginService, private authService: AuthService, private router: Router, private socialAuthService: SocialAuthService) {
   }
@@ -52,6 +53,10 @@ export class LoginComponent {
       this.user = user;
       this.validateGoogleLogin(user);
     });
+  }
+
+  onSwitchMode() {
+    this.isLoginMode = !this.isLoginMode;
   }
 
   validateGoogleLogin(user: SocialUser) {

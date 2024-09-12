@@ -1,7 +1,7 @@
 <div class="section login-container">
   <h2>Login</h2>
   <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="custom-login-mat-form-field">
       <mat-label>Username</mat-label>
       <input
         matInput
@@ -11,6 +11,7 @@
         required
         [(ngModel)]="username"
         #usernameInput="ngModel"
+        class="login-input"
       />
       <mat-error *ngIf="usernameInput.invalid && usernameInput.touched">
         Username is required
@@ -27,6 +28,7 @@
         required
         [(ngModel)]="password"
         #passwordInput="ngModel"
+        class="login-input"
       />
       <mat-error *ngIf="passwordInput.invalid && passwordInput.touched">
         Password is required

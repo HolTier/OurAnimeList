@@ -11,6 +11,7 @@
         required
         [(ngModel)]="registerUsername"
         #registerUsernameInput="ngModel"
+        class="login-input"
       />
       <mat-error *ngIf="registerUsernameInput.invalid && registerUsernameInput.touched">
         Username is required
@@ -27,6 +28,7 @@
         required
         [(ngModel)]="registerEmail"
         #registerEmailInput="ngModel"
+        class="login-input"
       />
       <mat-error *ngIf="registerEmailInput.invalid && registerEmailInput.touched">
         Email is required
@@ -43,6 +45,7 @@
         required
         [(ngModel)]="registerPassword"
         #registerPasswordInput="ngModel"
+        class="login-input"
       />
       <mat-error *ngIf="registerPasswordInput.invalid && registerPasswordInput.touched">
         Password is required

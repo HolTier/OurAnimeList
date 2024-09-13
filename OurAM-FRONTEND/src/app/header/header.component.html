@@ -25,6 +25,8 @@
         <span (mouseleave)="scheduleCloseMenu(animeMenuTrigger)" (mouseover)="cancelCloseMenu()">
           <!-- A dummy item to stop highlighting the button -->
           <a mat-menu-item style="display: none;"></a>
+
+          <!-- Anime menu items -->
           <a mat-menu-item routerLink="/anime" routerLinkActive="active">Anime List</a>
           <a mat-menu-item routerLink="/anime/new" routerLinkActive="active">Add Anime</a>
         </span>

@@ -1,0 +1,83 @@
+:host {
+  ::ng-deep {
+    .ngx-file-drop__drop-zone {
+      border: 2px dashed #dadce1 !important;
+      height: 500px !important;
+      width: 400px !important;
+      padding: 2px !important;
+      border-radius: 0 !important;
+      display: flex;
+      justify-content: center;
+    }
+
+    .ngx-file-drop__content {
+      background: #eff1f6;
+      color: #717074 !important;
+      height: auto !important;
+
+      div {
+        margin: 2rem 1rem 0 1rem;
+        text-align: center;
+
+        img {
+          margin-bottom: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .uploadedDocs {
+    margin-bottom: 0.5rem;
+
+    .imgsrc {
+      float: left;
+      margin-right: 10px;
+      border-radius: 10px;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .content {
+      color: #717074;
+      float: left;
+
+      p {
+        margin-bottom: 0.25rem;
+
+        &.delete {
+          display: flex;
+          align-items: center;
+          color: #f54337;
+
+          img {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  width: 400px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.img-content {
+  display: block;
+}
+

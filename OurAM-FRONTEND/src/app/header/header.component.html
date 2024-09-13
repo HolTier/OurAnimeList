@@ -6,9 +6,33 @@
   <nav>
     <!-- Navigation links -->
     <mat-button-toggle-group>
-      <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
-      <a mat-button routerLink="/about" routerLinkActive="active">About</a>
-      <a mat-button routerLink="/contact" routerLinkActive="active">Contact</a>
+      <a mat-button routerLink="/home" routerLinkActive="active" (mouseover)="closeMenu(animeMenuTrigger)">Home</a>
+      <a mat-button routerLink="/about" routerLinkActive="active" (mouseover)="closeMenu(animeMenuTrigger)">About</a>
+      <a mat-button routerLink="/contact" routerLinkActive="active" (mouseover)="closeMenu(animeMenuTrigger)">Contact</a>
+
+      <!-- Dropdown menu: Anime -->
+      <button
+        mat-button
+        #clickAnime
+        #animeMenuTrigger="matMenuTrigger"
+        [matMenuTriggerFor]="animeMenu"
+        (mouseover)="onMouseEnter(animeMenuTrigger)"
+        [ngClass] = "{'active': isAnimeButtonActive}"
+      >
+        Anime
+      </button>
+      <mat-menu #menuAnime hasBackdrop="false" #animeMenu="matMenu" [overlapTrigger]="false">
+        <span (mouseleave)="scheduleCloseMenu(animeMenuTrigger)" (mouseover)="cancelCloseMenu()">
+          <!-- A dummy item to stop highlighting the button -->
+          <a mat-menu-item style="display: none;"></a>
+          <a mat-menu-item routerLink="/anime" routerLinkActive="active">Anime List</a>
+          <a mat-menu-item routerLink="/anime/new" routerLinkActive="active">Add Anime</a>
+        </span>
+      </mat-menu>
+
+      <!-- Login/Logout button -->
+      <a mat-button *ngIf="isAuthenticated" (click)="logout()" (mouseover)="closeMenu(animeMenuTrigger)">Logout</a>
+      <a mat-button routerLink="/login" routerLinkActive="active" *ngIf="!isAuthenticated" (mouseover)="closeMenu(animeMenuTrigger)">Login</a>
     </mat-button-toggle-group>
   </nav>
 </mat-toolbar>

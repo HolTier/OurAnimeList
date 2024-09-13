@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../app/environment/environment";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {AuthService} from "./auth.service";
 import { catchError, shareReplay } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -39,6 +39,20 @@ export class LoginService {
 
     return this.http.post(environment.apiUrl + '/Account/singin-google', body, { headers })
       .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  public logout(): Observable<any> {
+    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.getToken() });
+
+    return this.http.post(environment.apiUrl + '/Account/logout', null, { headers })
+      .pipe(
+        tap(() => {
+          this.authService.removeToken();
+          // Refresh the current page
+          location.reload();
+        }),
         catchError(this.handleError)
       );
   }

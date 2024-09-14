@@ -4,27 +4,25 @@
       border: 2px dashed #dadce1 !important;
       height: 75% !important;
       width: 60% !important;
-      padding: 2px !important;
+      padding: 0 !important;
       margin-top: 10% !important;
       border-radius: 0 !important;
       display: flex;
       background-color: #eff1f6 !important;
       justify-content: center;
       align-items: center;
+      z-index: 0;
     }
 
     .ngx-file-drop__content {
       background: #eff1f6;
       color: #717074 !important;
-      height: auto !important;
+      height: 100% !important;
+      width: 100%;
 
       div {
-        margin: 2rem 1rem 0 1rem;
+        margin: 0;
         text-align: center;
-
-        img {
-          margin-bottom: 1.5rem;
-        }
       }
     }
   }
@@ -60,6 +58,10 @@
       }
     }
   }
+}
+
+.drop-content{
+
 }
 
 .fs-12 {
@@ -108,3 +110,17 @@
   background-color: blue; // todo: remove
 }
 
+.img-preview{
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}

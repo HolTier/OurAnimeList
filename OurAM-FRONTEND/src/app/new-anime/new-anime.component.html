@@ -7,15 +7,24 @@
         <ngx-file-drop dropZoneLabel="Drop files here"
                        (onFileDrop)="dropped($event)"
                        (onFileOver)="fileOver($event)"
-                       (onFileLeave)="fileLeave($event)">
-          <ng-template ngx-file-drop-content-tmp>
-            <div class="img-content">
+                       (onFileLeave)="fileLeave($event)"
+                       >
+          <ng-template ngx-file-drop-content-tmp *ngIf="!isImageAdded" class="drop-content">
+            <div class="img-content" >
               <strong>Drag and Drop your files here.</strong><br>
               <span>or</span><br>
-              <button mat-button>Browse Files</button>
+              <button mat-button>Browse Files</button><br>
+              <button mat-button>Upload From Url</button>
             </div>
           </ng-template>
+          <ng-template ngx-file-drop-content-tmp *ngIf="isImageAdded" class="drop-preview">
+            <div class="img-preview" >
+              <img [src]="imgSrc" alt="preview" *ngIf="imgSrc"/>
+            </div>
+          </ng-template>
+
         </ngx-file-drop>
+
       </div>
       <div class="info-genre-studio">
         <div class="info-genre">
@@ -58,7 +67,7 @@
     </div>
 
     <!-- Form to add a new anime -->
-    <div class="info-container">
+    <div class="description-container">
 
     </div>
   </form>

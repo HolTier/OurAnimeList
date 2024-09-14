@@ -2,12 +2,15 @@
   ::ng-deep {
     .ngx-file-drop__drop-zone {
       border: 2px dashed #dadce1 !important;
-      height: 500px !important;
-      width: 400px !important;
+      height: 75% !important;
+      width: 60% !important;
       padding: 2px !important;
+      margin-top: 10% !important;
       border-radius: 0 !important;
       display: flex;
+      background-color: #eff1f6 !important;
       justify-content: center;
+      align-items: center;
     }
 
     .ngx-file-drop__content {
@@ -63,21 +66,45 @@
   font-size: 12px;
 }
 
+.main-container{
+  background: linear-gradient(135deg, #13161f, #252c48);
+}
+
 .img-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 500px;
-  width: 400px;
-  background-color: #f1f1f1;
+  height: 100vh;
+  width: 25vw;
+  background-color: white;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
   transition: 0.3s;
+  flex-shrink: 0;
+}
+
+.drop-file{
+  display: block;
+  justify-content: center;
+  align-items: center;
+  height: 45%;
+  width: 100%;
+  background-color: red; // todo: remove
 }
 
 .img-content {
   display: block;
+}
+
+.info-genre-studio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 65%;
+  width: 100%;
+  background-color: blue; // todo: remove
 }
 

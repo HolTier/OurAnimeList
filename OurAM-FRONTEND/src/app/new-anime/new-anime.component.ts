@@ -3,7 +3,7 @@ import {HeaderComponent} from "../header/header.component";
 import {FormsModule} from "@angular/forms";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import {NgClass, NgIf} from "@angular/common";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import { NgxFileDropModule} from "ngx-file-drop";
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
@@ -22,15 +22,16 @@ import {MatButton} from "@angular/material/button";
     MatLabel,
     NgxFileDropModule,
     NgIf,
-    MatButton
+    MatButton,
+    MatError
   ],
   templateUrl: './new-anime.component.html',
   styleUrl: './new-anime.component.scss'
 })
 export class NewAnimeComponent {
-  isDragOver: any;
-  image: any;
   imagePath: string = '';
+  genre: any;
+  studio: any;
   constructor() {
   }
 

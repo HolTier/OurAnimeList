@@ -3,18 +3,58 @@
   <form #newAnimeForm="ngForm" (ngSubmit)="onSubmit()">
     <!-- Image container for new anime -->
     <div class="img-container">
-      <ngx-file-drop dropZoneLabel="Drop files here"
-                     (onFileDrop)="dropped($event)"
-                     (onFileOver)="fileOver($event)"
-                     (onFileLeave)="fileLeave($event)">
-        <ng-template ngx-file-drop-content-tmp>
-          <div class="img-content">
-            <strong>Drag and Drop your files here.</strong><br>
-            <span>or</span><br>
-            <button mat-button>Browse Files</button>
-          </div>
-        </ng-template>
-      </ngx-file-drop>
+      <div class="drop-file">
+        <ngx-file-drop dropZoneLabel="Drop files here"
+                       (onFileDrop)="dropped($event)"
+                       (onFileOver)="fileOver($event)"
+                       (onFileLeave)="fileLeave($event)">
+          <ng-template ngx-file-drop-content-tmp>
+            <div class="img-content">
+              <strong>Drag and Drop your files here.</strong><br>
+              <span>or</span><br>
+              <button mat-button>Browse Files</button>
+            </div>
+          </ng-template>
+        </ngx-file-drop>
+      </div>
+      <div class="info-genre-studio">
+        <div class="info-genre">
+          <mat-form-field appearance="fill">
+            <mat-label>Genre</mat-label>
+            <input
+              matInput
+              type="text"
+              id="genre"
+              name="genre"
+              required
+              [(ngModel)]="genre"
+              #genreInput="ngModel"
+              class="genre-input"
+            />
+            <mat-error *ngIf="genreInput.invalid && genreInput.touched">
+              Genre is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="info-studio">
+          <mat-form-field appearance="fill">
+            <mat-label>Studio</mat-label>
+            <input
+              matInput
+              type="text"
+              id="studio"
+              name="studio"
+              required
+              [(ngModel)]="studio"
+              #studioInput="ngModel"
+              class="studio-input"
+            />
+            <mat-error *ngIf="studioInput.invalid && studioInput.touched">
+              Studio is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
 
     <!-- Form to add a new anime -->

@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {HeaderComponent} from "../header/header.component";
 import {FormsModule} from "@angular/forms";
 import {CdkDropList} from "@angular/cdk/drag-drop";
-import {NgClass, NgIf, NgOptimizedImage} from "@angular/common";
+import {AsyncPipe, NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import { NgxFileDropModule} from "ngx-file-drop";
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import {MatButton} from "@angular/material/button";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 
 @Component({
   selector: 'app-new-anime',
@@ -24,19 +26,44 @@ import {MatButton} from "@angular/material/button";
     NgIf,
     MatButton,
     MatError,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatSelect,
+    MatOption,
+    NgForOf,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+    AsyncPipe
   ],
   templateUrl: './new-anime.component.html',
-  styleUrl: './new-anime.component.scss'
+  styleUrl: './new-anime.component.scss',
 })
 export class NewAnimeComponent {
-  imagePath: string = '';
+  @ViewChild('genreInputRef') genreInput!: ElementRef<HTMLInputElement>;
   imageFile: File | null = null;
   genre: any;
   studio: any;
   isImageAdded: boolean = false;
   imgSrc: string | ArrayBuffer | null = null;
+  genreList: string[] = [
+    'Action',
+    'Adventure',
+    'Comedy',
+    'Drama',
+    'Fantasy',
+    'Horror',
+    'Mecha',
+    'Mystery',
+    'Psychological',
+    'Romance',
+    'Sci-Fi',
+    'Slice of Life',
+    'Sports',
+    'Supernatural',
+    'Thriller'
+  ];
+  filteredGenreList: string[];
   constructor() {
+    this.filteredGenreList = this.genreList.slice();
   }
 
   ngInit() {
@@ -119,6 +146,11 @@ export class NewAnimeComponent {
     };
 
     reader.readAsDataURL(file);  // Read the file as Data URL (for preview purposes)
+  }
 
+  // Filter genre list based on user input
+  filterGenreList() : void {
+    const filterValue = this.genreInput.nativeElement.value.toLowerCase();
+    this.filteredGenreList = this.genreList.filter(genre => genre.toLowerCase().includes(filterValue));
   }
 }

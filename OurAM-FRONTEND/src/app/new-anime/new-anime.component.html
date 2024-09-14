@@ -26,43 +26,53 @@
         </ngx-file-drop>
 
       </div>
-      <div class="info-genre-studio">
-        <div class="info-genre">
-          <mat-form-field appearance="fill">
-            <mat-label>Genre</mat-label>
-            <input
-              matInput
-              type="text"
-              id="genre"
-              name="genre"
-              required
-              [(ngModel)]="genre"
-              #genreInput="ngModel"
-              class="genre-input"
-            />
-            <mat-error *ngIf="genreInput.invalid && genreInput.touched">
-              Genre is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="info-studio">
-          <mat-form-field appearance="fill">
-            <mat-label>Studio</mat-label>
-            <input
-              matInput
-              type="text"
-              id="studio"
-              name="studio"
-              required
-              [(ngModel)]="studio"
-              #studioInput="ngModel"
-              class="studio-input"
-            />
-            <mat-error *ngIf="studioInput.invalid && studioInput.touched">
-              Studio is required
-            </mat-error>
-          </mat-form-field>
-        </div>
+      <div class="left-info-container">
+        <!-- Genre -->
+        <mat-form-field appearance="fill">
+          <mat-label>Genre</mat-label>
+          <input
+            matInput
+            type="text"
+            id="genre"
+            name="genre"
+            required
+            [(ngModel)]="genre"
+            [matAutocomplete]="genreAuto"
+            (input)="filterGenreList()"
+            (focus)="filterGenreList()"
+            #genreInput="ngModel"
+            #genreInputRef
+            class="genre-input" />
+          <mat-autocomplete requireSelection #genreAuto="matAutocomplete">
+            @for (genreItem of filteredGenreList; track genreItem) {
+              <mat-option [value]="genreItem">
+                {{ genreItem }}
+              </mat-option>
+            }
+          </mat-autocomplete>
+
+          <mat-error *ngIf="genreInput.invalid && genreInput.touched">
+            Genre is required
+          </mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Studio</mat-label>
+          <input
+            matInput
+            type="text"
+            id="studio"
+            name="studio"
+            required
+            [(ngModel)]="studio"
+            #studioInput="ngModel"
+            class="studio-input"
+          />
+          <mat-error *ngIf="studioInput.invalid && studioInput.touched">
+            Studio is required
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
 

@@ -61,6 +61,13 @@ export class NewAnimeComponent {
     'Thriller'
   ];
   filteredGenreList: string[];
+  filteredStudioList: string[] = [];
+  studioList: string[] = [];
+  titleEN: any;
+  titleJP: any;
+  type: any;
+  filteredTypeList: string[] = [];
+  typeList: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music'];
   constructor() {
     this.filteredGenreList = this.genreList.slice();
   }

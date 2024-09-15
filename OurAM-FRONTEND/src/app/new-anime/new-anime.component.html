@@ -27,6 +27,71 @@
 
       </div>
       <div class="left-info-container">
+        <!-- TitleEN -->
+        <mat-form-field appearance="fill">
+          <mat-label>Title (EN)</mat-label>
+          <input
+            matInput
+            type="text"
+            id="titleEN"
+            name="titleEN"
+            required
+            [(ngModel)]="titleEN"
+            #titleENInput="ngModel"
+            class="title-input"
+          />
+          <mat-error *ngIf="titleENInput.invalid && titleENInput.touched">
+            Title (EN) is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- TitleJP -->
+        <mat-form-field appearance="fill">
+          <mat-label>Title (JP)</mat-label>
+          <input
+            matInput
+            type="text"
+            id="titleJP"
+            name="titleJP"
+            required
+            [(ngModel)]="titleJP"
+            #titleJPInput="ngModel"
+            class="title-input"
+          />
+          <mat-error *ngIf="titleJPInput.invalid && titleJPInput.touched">
+            Title (JP) is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Type -->
+        <mat-form-field appearance="fill">
+          <mat-label>Type</mat-label>
+          <input
+            matInput
+            type="text"
+            id="type"
+            name="type"
+            required
+            [(ngModel)]="type"
+            [matAutocomplete]="typeAuto"
+            (input)="filteredTypeList = filterList(typeList, typeInputRef)"
+            (focus)="filteredTypeList = filterList(typeList, typeInputRef)"
+            #typeInput="ngModel"
+            #typeInputRef
+            class="type-input"
+          />
+          <mat-autocomplete requireSelection #typeAuto="matAutocomplete">
+            @for (typeItem of filteredTypeList; track typeItem) {
+              <mat-option [value]="typeItem">
+                {{ typeItem }}
+              </mat-option>
+            }
+          </mat-autocomplete>
+          <mat-error *ngIf="typeInput.invalid && typeInput.touched">
+            Type is required
+          </mat-error>
+        </mat-form-field>
+
         <!-- Genre -->
         <mat-form-field appearance="fill">
           <mat-label>Genre</mat-label>
@@ -67,10 +132,20 @@
             name="studio"
             required
             [(ngModel)]="studio"
+            [matAutocomplete]="studioAuto"
+            (input)="filteredStudioList = filterList(studioList, studioInputRef)"
+            (focus)="filteredStudioList = filterList(studioList, studioInputRef)"
             #studioInput="ngModel"
-            #genreInputRef
+            #studioInputRef
             class="studio-input"
           />
+          <mat-autocomplete requireSelection #studioAuto="matAutocomplete">
+            @for (studioItem of filteredStudioList; track studioItem) {
+              <mat-option [value]="studioItem">
+                {{ studioItem }}
+              </mat-option>
+            }
+          </mat-autocomplete>
           <mat-error *ngIf="studioInput.invalid && studioInput.touched">
             Studio is required
           </mat-error>

@@ -38,8 +38,8 @@
             required
             [(ngModel)]="genre"
             [matAutocomplete]="genreAuto"
-            (input)="filterGenreList()"
-            (focus)="filterGenreList()"
+            (input)="filteredGenreList = filterList(genreList, genreInputRef)"
+            (focus)="filteredGenreList = filterList(genreList, genreInputRef)"
             #genreInput="ngModel"
             #genreInputRef
             class="genre-input" />
@@ -57,6 +57,7 @@
 
         </mat-form-field>
 
+        <!-- Studio -->
         <mat-form-field appearance="fill">
           <mat-label>Studio</mat-label>
           <input
@@ -67,6 +68,7 @@
             required
             [(ngModel)]="studio"
             #studioInput="ngModel"
+            #genreInputRef
             class="studio-input"
           />
           <mat-error *ngIf="studioInput.invalid && studioInput.touched">

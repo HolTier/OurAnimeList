@@ -38,7 +38,6 @@ import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocom
   styleUrl: './new-anime.component.scss',
 })
 export class NewAnimeComponent {
-  @ViewChild('genreInputRef') genreInput!: ElementRef<HTMLInputElement>;
   imageFile: File | null = null;
   genre: any;
   studio: any;
@@ -148,9 +147,8 @@ export class NewAnimeComponent {
     reader.readAsDataURL(file);  // Read the file as Data URL (for preview purposes)
   }
 
-  // Filter genre list based on user input
-  filterGenreList() : void {
-    const filterValue = this.genreInput.nativeElement.value.toLowerCase();
-    this.filteredGenreList = this.genreList.filter(genre => genre.toLowerCase().includes(filterValue));
+  filterList(list: string[], inputElement: HTMLInputElement): string[] {
+    const filterValue = inputElement.value.toLowerCase();
+    return list.filter(item => item.toLowerCase().includes(filterValue));
   }
 }

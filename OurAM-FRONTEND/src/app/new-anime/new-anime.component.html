@@ -150,12 +150,108 @@
             Studio is required
           </mat-error>
         </mat-form-field>
+
+        <!-- Status -->
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <input
+            matInput
+            type="text"
+            id="status"
+            name="status"
+            required
+            [(ngModel)]="status"
+            [matAutocomplete]="statusAuto"
+            (input)="filteredStatusList = filterList(statusList, statusInputRef)"
+            (focus)="filteredStatusList = filterList(statusList, statusInputRef)"
+            #statusInput="ngModel"
+            #statusInputRef
+            class="status-input"
+          />
+          <mat-autocomplete requireSelection #statusAuto="matAutocomplete">
+            @for (statusItem of filteredStatusList; track statusItem) {
+              <mat-option [value]="statusItem">
+                {{ statusItem }}
+              </mat-option>
+            }
+          </mat-autocomplete>
+          <mat-error *ngIf="statusInput.invalid && statusInput.touched">
+            Status is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Aired start and end date -->
+        <mat-form-field>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="airedRange" [rangePicker]="picker">
+            <input matStartDate  formControlName="start" placeholder="Start date">
+            <input matEndDate formControlName="end" placeholder="End date">
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          @if (airedRange.controls.start.hasError('matStartDateInvalid')) {
+            <mat-error>Invalid start date</mat-error>
+          }
+          @if (airedRange.controls.end.hasError('matEndDateInvalid')) {
+            <mat-error>Invalid end date</mat-error>
+          }
+        </mat-form-field>
       </div>
     </div>
 
     <!-- Form to add a new anime -->
-    <div class="description-container">
+    <div class="right-info-container">
+      <!-- Synopsis/Short Description -->
+      <mat-form-field>
+        <mat-label>Autosize textarea</mat-label>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  [(ngModel)]="synopsis"
+                  [ngModelOptions]="{standalone: true}"
+                  #synopsisTextarea="ngModel"
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="3"
+                  cdkAutosizeMaxRows="3"></textarea>
+        <mat-error *ngIf="synopsisTextarea.invalid && synopsisTextarea.touched">
+          Synopsis is required
+        </mat-error>
+      </mat-form-field>
 
+      <!-- Long Description -->
+      <mat-form-field>
+        <mat-label>Autosize textarea</mat-label>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  [(ngModel)]="longDescription"
+                  [ngModelOptions]="{standalone: true}"
+                  #longDescriptionTextarea="ngModel"
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="5"
+                  cdkAutosizeMaxRows="5"></textarea>
+        <mat-error *ngIf="longDescriptionTextarea.invalid && longDescriptionTextarea.touched">
+          Long Description is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Episode count -->
+      <mat-form-field appearance="fill">
+        <mat-label>Episode Count</mat-label>
+        <input
+          matInput
+          type="number"
+          id="episodeCount"
+          name="episodeCount"
+          required
+          [(ngModel)]="episodeCount"
+          #episodeCountInput="ngModel"
+          class="episode-count-input"
+        />
+        <mat-error *ngIf="episodeCountInput.invalid && episodeCountInput.touched">
+          Episode Count is required
+        </mat-error>
+      </mat-form-field>
     </div>
   </form>
 </div>

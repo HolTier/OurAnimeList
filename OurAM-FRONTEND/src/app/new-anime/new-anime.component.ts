@@ -1,15 +1,23 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {HeaderComponent} from "../header/header.component";
-import {FormsModule} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import {AsyncPipe, NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatError, MatFormField, MatFormFieldModule, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import { NgxFileDropModule} from "ngx-file-drop";
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import {MatButton} from "@angular/material/button";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
+import {
+  MatDatepicker,
+  MatDatepickerModule,
+  MatDatepickerToggle,
+  MatDateRangeInput,
+  MatDateRangePicker
+} from "@angular/material/datepicker";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 
 @Component({
   selector: 'app-new-anime',
@@ -32,7 +40,15 @@ import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocom
     NgForOf,
     MatAutocomplete,
     MatAutocompleteTrigger,
-    AsyncPipe
+    AsyncPipe,
+    MatDateRangeInput,
+    MatDatepickerToggle,
+    MatDateRangePicker,
+    ReactiveFormsModule,
+    CdkTextareaAutosize,
+    MatHint,
+    MatDatepickerModule,
+    MatFormFieldModule
   ],
   templateUrl: './new-anime.component.html',
   styleUrl: './new-anime.component.scss',
@@ -68,8 +84,21 @@ export class NewAnimeComponent {
   type: any;
   filteredTypeList: string[] = [];
   typeList: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music'];
+  status: any;
+  filteredStatusList: string[] = [];
+  statusList: string[] = ['Finished Airing', 'Currently Airing', 'Not Yet Aired'];
+  readonly airedRange = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null)
+  })
+  synopsis: any;
+  longDescription: any;
+  episodeCount: any;
   constructor() {
     this.filteredGenreList = this.genreList.slice();
+    this.filteredStudioList = this.studioList.slice();
+    this.filteredTypeList = this.typeList.slice();
+    this.filteredStatusList = this.statusList.slice();
   }
 
   ngInit() {

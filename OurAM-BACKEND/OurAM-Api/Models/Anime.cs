@@ -20,8 +20,9 @@ namespace OurAM_Api.Models
         public DateTime? AiredEnd { get; set; }
         public double Rating { get; set; }
         public int Episodes { get; set; }
-        public string[]? Tags { get; set; }
+        public string[]? Tags { get; set; } // TODO: Reconsider this
         public string? RatingRank { get; set; }
+        public string? Status { get; set; }
 
 
         public List<UserAnimeList> UserAnimeLists { get; set; } = new List<UserAnimeList>();

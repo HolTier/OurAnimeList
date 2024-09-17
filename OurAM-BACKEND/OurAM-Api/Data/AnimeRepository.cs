@@ -9,9 +9,9 @@ namespace OurAM_Api.Data
         {
         }
 
-        public async Task<Anime?> GetAnimeByTitleAndStudioAsync(string tittle, string studio)
+        public async Task<Anime?> GetAnimeByTitleAndStudioAsync(string tittle, int studioID)
         {
-            return await _context.Anime.FirstOrDefaultAsync(a => a.TitleEN == tittle && a.Studio == studio);
+            return await _context.Anime.FirstOrDefaultAsync(a => a.TitleEN == tittle && a.StudioID == studioID);
         }
     }
 }

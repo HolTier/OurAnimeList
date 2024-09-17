@@ -17,7 +17,7 @@ namespace OurAM_Api.Services
         public async Task AddAnimeAsync(Anime anime)
         {
             // Validate if the anime already exists
-            var repeatedAnime = await _animeRepository.GetAnimeByTitleAndStudioAsync(anime.TitleEN, anime.Studio);
+            var repeatedAnime = await _animeRepository.GetAnimeByTitleAndStudioAsync(anime.TitleEN, anime.StudioID);
             if (repeatedAnime != null)
             {
                 throw new Exception("The anime already exists");
@@ -69,10 +69,10 @@ namespace OurAM_Api.Services
             return Task.FromResult(name.Length >= 3 && name.Length <= 100);
         }
 
-        public Task<bool> ValidateRepeatedAnimeAsync(string name, string studio)
+        public Task<bool> ValidateRepeatedAnimeAsync(string name, int studioID)
         {
             // Validate if the anime already exists
-            if (_animeRepository.GetAnimeByTitleAndStudioAsync(name, studio) != null)
+            if (_animeRepository.GetAnimeByTitleAndStudioAsync(name, studioID) != null)
             {
                 return Task.FromResult(false);
             }
@@ -85,7 +85,7 @@ namespace OurAM_Api.Services
                 ValidateAnimeNameAsync(anime.TitleEN).Result &&
                 ValidateAnimeDescriptionAsync(anime.Description).Result &&
                 ValidateAnimeImageUrlAsync(anime.ImageUrl).Result &&
-                ValidateRepeatedAnimeAsync(anime.TitleEN, anime.Studio).Result
+                ValidateRepeatedAnimeAsync(anime.TitleEN, anime.StudioID).Result
             );
         }
     }

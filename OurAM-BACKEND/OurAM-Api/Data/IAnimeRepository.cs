@@ -4,6 +4,6 @@ namespace OurAM_Api.Data
 {
     public interface IAnimeRepository : IGenericRepository<Anime>
     {
-        public Task<Anime?> GetAnimeByTitleAndStudioAsync(string name, string studio);
+        public Task<Anime?> GetAnimeByTitleAndStudioAsync(string name, int studioID);
     }
 }

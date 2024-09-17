@@ -14,7 +14,7 @@ namespace OurAM_Api.Services
         Task<bool> ValidateAnimeNameAsync(string name);
         Task<bool> ValidateAnimeDescriptionAsync(string description);
         Task<bool> ValidateAnimeImageUrlAsync(string imageUrl);
-        Task<bool> ValidateRepeatedAnimeAsync(string name, string studio);
+        Task<bool> ValidateRepeatedAnimeAsync(string name, int studioID);
         Task<bool> ValidateEverythingAsync(Anime anime);
     }
 }

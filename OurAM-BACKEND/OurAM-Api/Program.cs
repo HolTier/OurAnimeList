@@ -86,6 +86,10 @@ namespace OurAM_Api
             builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
             builder.Services.AddTransient<IAnimeService, AnimeService>();
             builder.Services.AddTransient<IUserAnimeListService, UserAnimeListService>();
+            builder.Services.AddTransient<IAnimeStatusService, AnimeStatusService>();
+            builder.Services.AddTransient<IAnimeTypeService, AnimeTypeService>();
+            builder.Services.AddTransient<IGenreService, GenreService>();
+            builder.Services.AddTransient<IStudioService, StudioService>();
 
             // Swagger configuration
             builder.Services.AddEndpointsApiExplorer();

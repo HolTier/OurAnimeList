@@ -4,7 +4,7 @@ namespace OurAM_Api.Services
 {
     public interface IAnimeTypeService
     {
-        Task<IEnumerable<AnimeType>> GetAllAnimeTypeAsync();
+        Task<IEnumerable<AnimeType>> GetAllAnimeTypesAsync();
         Task<AnimeType?> GetAnimeTypeByIdAsync(int id);
         Task<AnimeType?> GetAnimeTypeByNameAsync(string name);
         Task AddAnimeTypeAsync(AnimeType anime);

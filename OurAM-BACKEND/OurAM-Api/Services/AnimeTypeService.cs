@@ -12,7 +12,7 @@ namespace OurAM_Api.Services
             _animeTypeRepository = animeTypeRepository;
         }
 
-        public async Task<IEnumerable<AnimeType>> GetAllAnimeTypeAsync()
+        public async Task<IEnumerable<AnimeType>> GetAllAnimeTypesAsync()
         {
             return await _animeTypeRepository.GetAllAsync();
         }

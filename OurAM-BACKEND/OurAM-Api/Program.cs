@@ -77,6 +77,11 @@ namespace OurAM_Api
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped(typeof(IAnimeRepository), typeof(AnimeRepository));
             builder.Services.AddScoped(typeof(IUserAnimeListRepository), typeof(UserAnimeListRepository));
+            builder.Services.AddScoped(typeof(IAnimeStatusRepository), typeof(AnimeStatusRepository));
+            builder.Services.AddScoped(typeof(IAnimeTypeRepository), typeof(AnimeTypeRepository));
+            builder.Services.AddScoped(typeof(IGenreRepository), typeof(GenreRepository));
+            builder.Services.AddScoped(typeof(IStudioRepository), typeof(StudioRepository));
+
             builder.Services.AddSingleton<IAuthorizationServices, AuthorizationServices>();
             builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
             builder.Services.AddTransient<IAnimeService, AnimeService>();

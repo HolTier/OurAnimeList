@@ -17,6 +17,12 @@ namespace OurAM_Api.Mappings
             // UserAnimeList
             CreateMap<UserAnimeList, UserAnimeListDTO>();
             CreateMap<UserAnimeListDTO, UserAnimeList>();
+
+            // Lookups
+            CreateMap<AnimeType, GenericLookupDTO>();
+            CreateMap<Genre, GenericLookupDTO>();
+            CreateMap<Studio, GenericLookupDTO>();
+            CreateMap<AnimeStatus, GenericLookupDTO>();
         }
     }
 }

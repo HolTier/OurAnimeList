@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using OurAM_Api.DTO;
 using OurAM_Api.Services;
 
@@ -12,13 +13,15 @@ namespace OurAM_Api.Controllers
         private readonly IStudioService _studioService;
         private readonly IAnimeStatusService _animeStatusService;
         private readonly IAnimeTypeService _animeTypeService;
+        private readonly IMapper _mapper;
 
-        public LookupController(IGenreService genreService, IStudioService studioService, IAnimeStatusService animeStatusService, IAnimeTypeService animeTypeService)
+        public LookupController(IGenreService genreService, IStudioService studioService, IAnimeStatusService animeStatusService, IAnimeTypeService animeTypeService, IMapper mapper)
         {
             _genreService = genreService;
             _studioService = studioService;
             _animeStatusService = animeStatusService;
             _animeTypeService = animeTypeService;
+            _mapper = mapper;
         }
 
         [HttpGet("genres")]
@@ -59,10 +62,10 @@ namespace OurAM_Api.Controllers
 
             var lookups = new LookupDTO
             {
-                Genres = genres,
-                Studios = studios,
-                AnimeStatuses = animeStatuses,
-                AnimeTypes = animeTypes
+                Genres = _mapper.Map<IEnumerable<GenericLookupDTO>>(genres),
+                Studios = _mapper.Map<IEnumerable<GenericLookupDTO>>(studios),
+                AnimeStatuses = _mapper.Map<IEnumerable<GenericLookupDTO>>(animeStatuses),
+                AnimeTypes = _mapper.Map<IEnumerable<GenericLookupDTO>>(animeTypes)
             };
 
             return Ok(lookups);

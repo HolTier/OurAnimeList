@@ -3,7 +3,7 @@ import {HeaderComponent} from "../header/header.component";
 import {MainBannerComponent} from "../main-banner/main-banner.component";
 import {CardComponent} from "../card/card.component";
 import {NgForOf} from "@angular/common";
-import {AnimeCardInterface} from "../shared/interfaces/animeCardInterface";
+import {AnimeCardInterface} from "../shared/interfaces/anime-card.interface";
 import {AnimeService} from "../../services/anime.service";
 import {tap, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";

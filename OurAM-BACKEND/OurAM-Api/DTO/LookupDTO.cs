@@ -4,9 +4,9 @@ namespace OurAM_Api.DTO
 {
     public class LookupDTO
     {
-        public IEnumerable<AnimeStatus>? AnimeStatuses { get; set; } = null!;
-        public IEnumerable<AnimeType>? AnimeTypes { get; set; } = null!;
-        public IEnumerable<Genre>? Genres { get; set; } = null!;
-        public IEnumerable<Studio>? Studios { get; set; } = null!;
+        public IEnumerable<GenericLookupDTO>? AnimeStatuses { get; set; } = null!;
+        public IEnumerable<GenericLookupDTO>? AnimeTypes { get; set; } = null!;
+        public IEnumerable<GenericLookupDTO>? Genres { get; set; } = null!;
+        public IEnumerable<GenericLookupDTO>? Studios { get; set; } = null!;
     }
 }

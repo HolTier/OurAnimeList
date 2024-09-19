@@ -12,8 +12,8 @@ export class NewAnimeService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public fetchAnimeLookup(): Observable<AnimeLookupInterface[]>{
-    return this.httpClient.get<AnimeLookupInterface[]>(environment.apiUrl + "/Anime/GetAnimeLookup")
+  public fetchAnimeLookup(): Observable<AnimeLookupInterface>{
+    return this.httpClient.get<AnimeLookupInterface>(environment.apiUrl + "/lookup/all-lookups")
       .pipe(
         catchError(this.handleError)
       )

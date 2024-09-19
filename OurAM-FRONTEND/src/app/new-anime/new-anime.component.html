@@ -74,16 +74,16 @@
             required
             [(ngModel)]="type"
             [matAutocomplete]="typeAuto"
-            (input)="filteredTypeList = filterList(typeList, typeInputRef)"
-            (focus)="filteredTypeList = filterList(typeList, typeInputRef)"
+            (input)="filteredAnimeTypes = filterList(lookupData?.animeTypes, typeInputRef)"
+            (focus)="filteredAnimeTypes = filterList(lookupData?.animeTypes, typeInputRef)"
             #typeInput="ngModel"
             #typeInputRef
             class="type-input"
           />
           <mat-autocomplete requireSelection #typeAuto="matAutocomplete">
-            @for (typeItem of filteredTypeList; track typeItem) {
-              <mat-option [value]="typeItem">
-                {{ typeItem }}
+            @for (typeItem of filteredAnimeTypes; track typeItem) {
+              <mat-option [value]="typeItem.name">
+                {{ typeItem.name }}
               </mat-option>
             }
           </mat-autocomplete>
@@ -103,15 +103,15 @@
             required
             [(ngModel)]="genre"
             [matAutocomplete]="genreAuto"
-            (input)="filteredGenreList = filterList(genreList, genreInputRef)"
-            (focus)="filteredGenreList = filterList(genreList, genreInputRef)"
+            (input)="filteredGenres = filterList(lookupData?.genres, genreInputRef)"
+            (focus)="filteredGenres = filterList(lookupData?.genres, genreInputRef)"
             #genreInput="ngModel"
             #genreInputRef
             class="genre-input" />
           <mat-autocomplete requireSelection #genreAuto="matAutocomplete">
-            @for (genreItem of filteredGenreList; track genreItem) {
-              <mat-option [value]="genreItem">
-                {{ genreItem }}
+            @for (genreItem of filteredGenres; track genreItem) {
+              <mat-option [value]="genreItem.name">
+                {{ genreItem.name }}
               </mat-option>
             }
           </mat-autocomplete>
@@ -133,16 +133,16 @@
             required
             [(ngModel)]="studio"
             [matAutocomplete]="studioAuto"
-            (input)="filteredStudioList = filterList(studioList, studioInputRef)"
-            (focus)="filteredStudioList = filterList(studioList, studioInputRef)"
+            (input)="filteredStudios = filterList(lookupData?.studios, studioInputRef)"
+            (focus)="filteredStudios = filterList(lookupData?.studios, studioInputRef)"
             #studioInput="ngModel"
             #studioInputRef
             class="studio-input"
           />
           <mat-autocomplete requireSelection #studioAuto="matAutocomplete">
-            @for (studioItem of filteredStudioList; track studioItem) {
-              <mat-option [value]="studioItem">
-                {{ studioItem }}
+            @for (studioItem of filteredStudios; track studioItem) {
+              <mat-option [value]="studioItem.name">
+                {{ studioItem.name }}
               </mat-option>
             }
           </mat-autocomplete>
@@ -162,16 +162,16 @@
             required
             [(ngModel)]="status"
             [matAutocomplete]="statusAuto"
-            (input)="filteredStatusList = filterList(statusList, statusInputRef)"
-            (focus)="filteredStatusList = filterList(statusList, statusInputRef)"
+            (input)="filteredAnimeStatuses = filterList(lookupData?.animeStatuses, statusInputRef)"
+            (focus)="filteredAnimeStatuses = filterList(lookupData?.animeStatuses, statusInputRef)"
             #statusInput="ngModel"
             #statusInputRef
             class="status-input"
           />
           <mat-autocomplete requireSelection #statusAuto="matAutocomplete">
-            @for (statusItem of filteredStatusList; track statusItem) {
-              <mat-option [value]="statusItem">
-                {{ statusItem }}
+            @for (statusItem of filteredAnimeStatuses; track statusItem) {
+              <mat-option [value]="statusItem.name">
+                {{ statusItem.name }}
               </mat-option>
             }
           </mat-autocomplete>

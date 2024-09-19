@@ -18,6 +18,10 @@ import {
   MatDateRangePicker
 } from "@angular/material/datepicker";
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {NewAnimeService} from "../../services/new-anime.services";
+import {AnimeLookupInterface, GenericLookupInterface} from "../shared/interfaces/new-anime.interfaces";
+import {Observable, tap, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-new-anime',
@@ -54,57 +58,64 @@ import {CdkTextareaAutosize} from "@angular/cdk/text-field";
   styleUrl: './new-anime.component.scss',
 })
 export class NewAnimeComponent {
+  // Image upload
   imageFile: File | null = null;
-  genre: any;
-  studio: any;
   isImageAdded: boolean = false;
   imgSrc: string | ArrayBuffer | null = null;
-  genreList: string[] = [
-    'Action',
-    'Adventure',
-    'Comedy',
-    'Drama',
-    'Fantasy',
-    'Horror',
-    'Mecha',
-    'Mystery',
-    'Psychological',
-    'Romance',
-    'Sci-Fi',
-    'Slice of Life',
-    'Sports',
-    'Supernatural',
-    'Thriller'
-  ];
-  filteredGenreList: string[];
-  filteredStudioList: string[] = [];
-  studioList: string[] = [];
+
+  // Titles
   titleEN: any;
   titleJP: any;
+
+  // Lookup data
+  lookupData: AnimeLookupInterface | null = null;
+  filteredGenres: GenericLookupInterface[] = [];
+  filteredStudios: GenericLookupInterface[] = [];
+  filteredAnimeTypes: GenericLookupInterface[] = [];
+  filteredAnimeStatuses: GenericLookupInterface[] = [];
+
+  // Lookup ngModels
   type: any;
-  filteredTypeList: string[] = [];
-  typeList: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music'];
-  status: any;
-  filteredStatusList: string[] = [];
-  statusList: string[] = ['Finished Airing', 'Currently Airing', 'Not Yet Aired'];
+  status: any
+  studio: any;
+  genre: any;
+
+  // Date range
   readonly airedRange = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null)
   })
+
+  // Right side (descriptions and episode count)
   synopsis: any;
   longDescription: any;
   episodeCount: any;
-  constructor() {
-    this.filteredGenreList = this.genreList.slice();
-    this.filteredStudioList = this.studioList.slice();
-    this.filteredTypeList = this.typeList.slice();
-    this.filteredStatusList = this.statusList.slice();
+
+  constructor(private newAnimeService: NewAnimeService) {
+
   }
 
-  ngInit() {
-    this.imageFile = null;
-    this.imgSrc = null;
-    this.isImageAdded = false;
+  ngOnInit(): void {
+    this.fetchAllLookupData();
+  }
+
+  // Fetch all lookup data
+  fetchAllLookupData() {
+    this.newAnimeService.fetchAnimeLookup().pipe(
+      tap((data: AnimeLookupInterface) => {
+        console.log('Lookup data:', data);
+        this.lookupData = data;
+        this.filteredGenres = data.genres;
+        this.filteredStudios = data.studios;
+        this.filteredAnimeTypes = data.animeTypes;
+        this.filteredAnimeStatuses = data.animeStatuses;
+      }
+    ),
+      catchError(error => {
+        console.error('Error:', error);
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+      })
+    ).subscribe();
   }
 
   onSubmit() {
@@ -183,8 +194,14 @@ export class NewAnimeComponent {
     reader.readAsDataURL(file);  // Read the file as Data URL (for preview purposes)
   }
 
-  filterList(list: string[], inputElement: HTMLInputElement): string[] {
+  filterList(list: GenericLookupInterface[] | undefined, inputElement: HTMLInputElement): GenericLookupInterface[] {
     const filterValue = inputElement.value.toLowerCase();
-    return list.filter(item => item.toLowerCase().includes(filterValue));
+
+    if (!list) {
+      return [];
+    }
+    return list.filter((item: GenericLookupInterface) => item.name.toLowerCase().includes(filterValue));
   }
+
+  protected readonly tap = tap;
 }

@@ -3,7 +3,7 @@
     <!-- Add a link to the logo -->
     <a href="#" class="logo-link">23</a>
   </div>
-  <nav>
+  <nav (mouseleave)="closeMenu(animeMenuTrigger)">
     <!-- Navigation links -->
     <mat-button-toggle-group>
       <a mat-button routerLink="/home" routerLinkActive="active" (mouseover)="closeMenu(animeMenuTrigger)">Home</a>
@@ -21,7 +21,7 @@
       >
         Anime
       </button>
-      <mat-menu #menuAnime hasBackdrop="false" #animeMenu="matMenu" [overlapTrigger]="false">
+      <mat-menu #menuAnime hasBackdrop="false" #animeMenu="matMenu" [overlapTrigger]="false" (mouseleave)="closeMenu(animeMenuTrigger)">
         <span (mouseleave)="scheduleCloseMenu(animeMenuTrigger)" (mouseover)="cancelCloseMenu()">
           <!-- A dummy item to stop highlighting the button -->
           <a mat-menu-item style="display: none;"></a>

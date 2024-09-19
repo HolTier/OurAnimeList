@@ -71,6 +71,12 @@
 .main-container{
   background: linear-gradient(135deg, #13161f, #252c48);
   display: flex;
+  flex-direction: column;
+}
+
+.main-form{
+  display: flex;
+  flex-direction: row;
 }
 
 .img-container {

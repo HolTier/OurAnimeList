@@ -9,3 +9,20 @@ export interface AnimeLookupInterface {
   animeTypes: GenericLookupInterface[];
   animeStatuses: GenericLookupInterface[];
 }
+
+export interface NewAnimeInterface {
+  titleEN: string;
+  titleJP: string;
+  studioID: number;
+  shortDescription: string;
+  description: string;
+  imageUrl: string;
+  genreID: number;
+  ReleaseDate: Date;
+  AiredStart: Date;
+  AiredEnd: Date;
+  episodes: number;
+  rating: number;
+  animeTypeID: number;
+  animeStatusID: number;
+}

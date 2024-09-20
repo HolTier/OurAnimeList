@@ -27,44 +27,8 @@
 
       </div>
       <div class="left-info-container">
-        <!-- TitleEN -->
-        <mat-form-field appearance="fill">
-          <mat-label>Title (EN)</mat-label>
-          <input
-            matInput
-            type="text"
-            id="titleEN"
-            name="titleEN"
-            required
-            [(ngModel)]="titleEN"
-            #titleENInput="ngModel"
-            class="title-input"
-          />
-          <mat-error *ngIf="titleENInput.invalid && titleENInput.touched">
-            Title (EN) is required
-          </mat-error>
-        </mat-form-field>
-
-        <!-- TitleJP -->
-        <mat-form-field appearance="fill">
-          <mat-label>Title (JP)</mat-label>
-          <input
-            matInput
-            type="text"
-            id="titleJP"
-            name="titleJP"
-            required
-            [(ngModel)]="titleJP"
-            #titleJPInput="ngModel"
-            class="title-input"
-          />
-          <mat-error *ngIf="titleJPInput.invalid && titleJPInput.touched">
-            Title (JP) is required
-          </mat-error>
-        </mat-form-field>
-
         <!-- Type -->
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="autocomplete">
           <mat-label>Type</mat-label>
           <input
             matInput
@@ -93,7 +57,7 @@
         </mat-form-field>
 
         <!-- Genre -->
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="autocomplete">
           <mat-label>Genre</mat-label>
           <input
             matInput
@@ -123,7 +87,7 @@
         </mat-form-field>
 
         <!-- Studio -->
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="autocomplete">
           <mat-label>Studio</mat-label>
           <input
             matInput
@@ -152,7 +116,7 @@
         </mat-form-field>
 
         <!-- Status -->
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="autocomplete">
           <mat-label>Status</mat-label>
           <input
             matInput
@@ -181,13 +145,13 @@
         </mat-form-field>
 
         <!-- Aired start and end date -->
-        <mat-form-field>
+        <mat-form-field class="autocomplete">
           <mat-label>Enter a date range</mat-label>
           <mat-date-range-input [formGroup]="airedRange" [rangePicker]="picker">
             <input matStartDate  formControlName="start" placeholder="Start date">
             <input matEndDate formControlName="end" placeholder="End date">
           </mat-date-range-input>
-          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint> <!-- TODO: Add different date formats -->
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
 
@@ -203,6 +167,64 @@
 
     <!-- Form to add a new anime -->
     <div class="right-info-container">
+      <h2 class="form-title">Add a new anime</h2>
+
+      <div class="title-container">
+        <!-- TitleEN -->
+        <mat-form-field appearance="fill" class="title">
+          <mat-label>Title (EN)</mat-label>
+          <input
+            matInput
+            type="text"
+            id="titleEN"
+            name="titleEN"
+            required
+            [(ngModel)]="titleEN"
+            #titleENInput="ngModel"
+            class="title-input"
+          />
+          <mat-error *ngIf="titleENInput.invalid && titleENInput.touched">
+            Title (EN) is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- TitleJP -->
+        <mat-form-field appearance="fill" class="title">
+          <mat-label>Title (JP)</mat-label>
+          <input
+            matInput
+            type="text"
+            id="titleJP"
+            name="titleJP"
+            required
+            [(ngModel)]="titleJP"
+            #titleJPInput="ngModel"
+            class="title-input"
+          />
+          <mat-error *ngIf="titleJPInput.invalid && titleJPInput.touched">
+            Title (JP) is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Episode count -->
+        <mat-form-field appearance="fill" class="episode">
+          <mat-label>Episode Count</mat-label>
+          <input
+            matInput
+            type="number"
+            id="episodeCount"
+            name="episodeCount"
+            required
+            [(ngModel)]="episodeCount"
+            #episodeCountInput="ngModel"
+            class="episode-count-input"
+          />
+          <mat-error *ngIf="episodeCountInput.invalid && episodeCountInput.touched">
+            Episode Count is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
       <!-- Synopsis/Short Description -->
       <mat-form-field>
         <mat-label>Synopsis</mat-label>
@@ -212,8 +234,8 @@
                   [ngModelOptions]="{standalone: true}"
                   #synopsisTextarea="ngModel"
                   #autosize="cdkTextareaAutosize"
-                  cdkAutosizeMinRows="3"
-                  cdkAutosizeMaxRows="3"></textarea>
+                  cdkAutosizeMinRows="7"
+                  cdkAutosizeMaxRows="7"></textarea>
         <mat-error *ngIf="synopsisTextarea.invalid && synopsisTextarea.touched">
           Synopsis is required
         </mat-error>
@@ -228,30 +250,20 @@
                   [ngModelOptions]="{standalone: true}"
                   #longDescriptionTextarea="ngModel"
                   #autosize="cdkTextareaAutosize"
-                  cdkAutosizeMinRows="5"
-                  cdkAutosizeMaxRows="5"></textarea>
+                  cdkAutosizeMinRows="15"
+                  cdkAutosizeMaxRows="15"></textarea>
         <mat-error *ngIf="longDescriptionTextarea.invalid && longDescriptionTextarea.touched">
           Long Description is required
         </mat-error>
       </mat-form-field>
 
-      <!-- Episode count -->
-      <mat-form-field appearance="fill">
-        <mat-label>Episode Count</mat-label>
-        <input
-          matInput
-          type="number"
-          id="episodeCount"
-          name="episodeCount"
-          required
-          [(ngModel)]="episodeCount"
-          #episodeCountInput="ngModel"
-          class="episode-count-input"
-        />
-        <mat-error *ngIf="episodeCountInput.invalid && episodeCountInput.touched">
-          Episode Count is required
-        </mat-error>
-      </mat-form-field>
+      <div class="buttons">
+        <!-- Submit button -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="newAnimeForm.invalid">Save</button>
+
+        <!-- Reset button -->
+        <button mat-raised-button color="warn" type="button" (click)="resetForm()">Reset</button>
+      </div>
     </div>
   </form>
 </div>

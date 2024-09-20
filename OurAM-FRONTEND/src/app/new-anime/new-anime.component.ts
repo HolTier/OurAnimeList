@@ -204,4 +204,8 @@ export class NewAnimeComponent {
   }
 
   protected readonly tap = tap;
+
+  resetForm() {
+
+  }
 }

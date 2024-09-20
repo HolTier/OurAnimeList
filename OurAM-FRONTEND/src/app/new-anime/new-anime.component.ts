@@ -7,7 +7,7 @@ import {MatError, MatFormField, MatFormFieldModule, MatHint, MatLabel} from "@an
 import {MatInput} from "@angular/material/input";
 import { NgxFileDropModule} from "ngx-file-drop";
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {
@@ -22,6 +22,7 @@ import {NewAnimeService} from "../../services/new-anime.services";
 import {AnimeLookupInterface, GenericLookupInterface} from "../shared/interfaces/new-anime.interfaces";
 import {Observable, tap, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-new-anime',
@@ -52,13 +53,16 @@ import {catchError} from "rxjs/operators";
     CdkTextareaAutosize,
     MatHint,
     MatDatepickerModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatIcon,
+    MatIconButton
   ],
   templateUrl: './new-anime.component.html',
   styleUrl: './new-anime.component.scss',
 })
 export class NewAnimeComponent {
   // Image upload
+  @ViewChild('fileInput') fileInput!: ElementRef;
   imageFile: File | null = null;
   isImageAdded: boolean = false;
   imgSrc: string | ArrayBuffer | null = null;
@@ -122,10 +126,17 @@ export class NewAnimeComponent {
 
   }
 
+  onAddFileClick() {
+    this.fileInput.nativeElement.click();
+  }
+
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    console.log('File selected', file);
-    // Handle file
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      console.log('Selected file:', file);
+      this.handleFile(file);
+    }
   }
 
   addImageFromUrl() {
@@ -133,6 +144,7 @@ export class NewAnimeComponent {
     if (imageUrl) {
       console.log('Image URL:', imageUrl);
       // Handle URL
+      this.handleFileFromUrl(imageUrl);
     }
   }
 
@@ -194,6 +206,11 @@ export class NewAnimeComponent {
     reader.readAsDataURL(file);  // Read the file as Data URL (for preview purposes)
   }
 
+  private handleFileFromUrl(file: string) {
+    this.imgSrc = file;
+    this.isImageAdded = true;
+  }
+
   filterList(list: GenericLookupInterface[] | undefined, inputElement: HTMLInputElement): GenericLookupInterface[] {
     const filterValue = inputElement.value.toLowerCase();
 
@@ -203,9 +220,23 @@ export class NewAnimeComponent {
     return list.filter((item: GenericLookupInterface) => item.name.toLowerCase().includes(filterValue));
   }
 
-  protected readonly tap = tap;
-
   resetForm() {
+    this.titleEN = null;
+    this.titleJP = null;
+    this.studio = null;
+    this.synopsis = null;
+    this.longDescription = null;
+    this.episodeCount = null;
+    this.genre = null;
+    this.type = null;
+    this.status = null;
+    this.airedRange.reset();
+    this.removeImage();
+  }
 
+  removeImage() {
+    this.imageFile = null;
+    this.imgSrc = null;
+    this.isImageAdded = false;
   }
 }

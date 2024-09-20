@@ -13,15 +13,15 @@
             <div class="img-content" >
               <strong>Drag and Drop your files here.</strong><br>
               <span>or</span><br>
-              <button mat-button (click)="onAddFileClick()">Browse Files</button><br>
+              <button mat-button (click)="onAddFileClick()" type="button">Browse Files</button><br>
               <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" hidden />
-              <button mat-button (click)="addImageFromUrl()">Upload From Url</button>
+              <button mat-button (click)="addImageFromUrl()" type="button">Upload From Url</button>
             </div>
           </ng-template>
           <ng-template ngx-file-drop-content-tmp *ngIf="isImageAdded" class="drop-preview">
             <div class="img-preview" >
               <!-- X button to remove the image -->
-              <button mat-icon-button (click)="removeImage()">
+              <button mat-icon-button (click)="removeImage()" type="button">
                 <mat-icon>close</mat-icon>
               </button>
               <!-- Preview of the image -->
@@ -265,7 +265,7 @@
 
       <div class="buttons">
         <!-- Submit button -->
-        <button mat-raised-button color="primary" type="submit" [disabled]="newAnimeForm.invalid">Save</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="newAnimeForm.invalid" >Save</button>
 
         <!-- Reset button -->
         <button mat-raised-button color="warn" type="button" (click)="resetForm()">Reset</button>

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OurAM_Api.DTO;
 using OurAM_Api.Models;
@@ -13,12 +14,20 @@ namespace OurAM_Api.Controllers
     public class AnimeController : ControllerBase
     {
         private readonly IAnimeService _animeServices;
+        private readonly IGenreService _genreService;
+        private readonly IStudioService _studioService;
+        private readonly IAnimeTypeService _animeTypeService;
+        private readonly IAnimeStatusService _animeStatusService;
         private readonly IMapper _mapper;
 
-        public AnimeController(IAnimeService animeServices, IMapper mapper)
+        public AnimeController(IAnimeService animeServices, IMapper mapper, IGenreService genreService, IStudioService studioService, IAnimeTypeService animeTypeService, IAnimeStatusService animeStatusService)
         {
             _animeServices = animeServices;
             _mapper = mapper;
+            _genreService = genreService;
+            _studioService = studioService;
+            _animeTypeService = animeTypeService;
+            _animeStatusService = animeStatusService;
         }
 
         [HttpGet]
@@ -64,15 +73,34 @@ namespace OurAM_Api.Controllers
         }
 
         [HttpPost("AddAnime")]
-        [Authorize]
-        public async Task<IActionResult> AddAnime(AnimeDTO animeDTO)
+        public async Task<IActionResult> AddAnime(NewAnimeDTO newAnimeDTO)
         {
-            Anime anime = _mapper.Map<Anime>(animeDTO);
+            // Retrieve related entities from the database
+            var genre = await _genreService.GetGenreByIdAsync(newAnimeDTO.GenreID);
+            var studio = await _studioService.GetStudioByIdAsync(newAnimeDTO.StudioID);
+            var animeType = await _animeTypeService.GetAnimeTypeByIdAsync(newAnimeDTO.AnimeTypeID);
+            var animeStatus = await _animeStatusService.GetAnimeStatusByIdAsync(newAnimeDTO.AnimeStatusID);
+
+            // Check if any of the related entities are null
+            if (genre == null || studio == null || animeType == null || animeStatus == null)
+            {
+                return BadRequest("Invalid Genre, Studio, AnimeType, or AnimeStatus ID.");
+            }
+
+            // Map the DTO to the Anime entity
+            Anime anime = _mapper.Map<Anime>(newAnimeDTO);
+
+            // Set the related entities
+            anime.Genre = genre;
+            anime.Studio = studio;
+            anime.AnimeType = animeType;
+            anime.AnimeStatus = animeStatus;
 
             try
             {
+                // Save to the database
                 await _animeServices.AddAnimeAsync(anime);
-                return Ok("Anime added successfully");
+                return Ok(new { message = "Anime added successfully" });
             }
             catch (Exception e)
             {

@@ -19,7 +19,11 @@ import {
 } from "@angular/material/datepicker";
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 import {NewAnimeService} from "../../services/new-anime.services";
-import {AnimeLookupInterface, GenericLookupInterface} from "../shared/interfaces/new-anime.interfaces";
+import {
+  AnimeLookupInterface,
+  GenericLookupInterface,
+  NewAnimeInterface
+} from "../shared/interfaces/new-anime.interfaces";
 import {Observable, tap, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {MatIcon} from "@angular/material/icon";
@@ -123,7 +127,39 @@ export class NewAnimeComponent {
   }
 
   onSubmit() {
+    // Prepare the new anime data
+    const newAnimeData = {
+      titleEN: this.titleEN,
+      titleJP: this.titleJP,
+      studioID: this.lookupData?.studios.find((studio: GenericLookupInterface) => studio.name === this.studio)?.id,
+      shortDescription: this.synopsis,
+      description: this.longDescription,
+      imageUrl: this.imgSrc as string,
+      genreID: this.lookupData?.genres.find((genre: GenericLookupInterface) => genre.name === this.genre)?.id,
+      ReleaseDate: new Date(),
+      AiredStart: this.airedRange.get('start')?.value,
+      AiredEnd: this.airedRange.get('end')?.value,
+      episodes: this.episodeCount,
+      rating: 0,
+      animeTypeID: this.lookupData?.animeTypes.find((type: GenericLookupInterface) => type.name === this.type)?.id,
+      animeStatusID: this.lookupData?.animeStatuses.find((status: GenericLookupInterface) => status.name === this.status)?.id
+    } as NewAnimeInterface;
 
+    console.log('New anime data:', newAnimeData);
+
+    // Send the new anime data to the server
+    this.newAnimeService.saveNewAnime(newAnimeData).pipe(
+      tap(response => {
+        console.log('Response:', response);
+        alert('Anime added successfully!');
+        this.resetForm();
+      }),
+      catchError(error => {
+        console.error('Error:', error);
+        alert('Error adding anime');
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+      })
+    ).subscribe();
   }
 
   onAddFileClick() {

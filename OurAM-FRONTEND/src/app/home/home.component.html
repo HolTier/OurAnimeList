@@ -5,7 +5,7 @@
 
   <div class="cards-container">
     <app-card
-      *ngFor="let anime of animeList; trackBy: trackByAnime"
+      *ngFor="let anime of animeList | slice:0:7; trackBy: trackByAnime"
       [logoUrl]="anime.imageUrl"
       [title]="anime.titleEN"
       [shortDescription]="anime.shortDescription"

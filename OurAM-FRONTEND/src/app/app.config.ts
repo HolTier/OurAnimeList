@@ -6,6 +6,7 @@ import {provideHttpClient} from "@angular/common/http";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { SocialAuthServiceConfig, SocialLoginModule, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import {provideNativeDateAdapter} from "@angular/material/core";
+import {IMAGE_CONFIG} from "@angular/common";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,6 +31,13 @@ export const appConfig: ApplicationConfig = {
           console.error(error);
         }
       } as SocialAuthServiceConfig,
+    },
+    {
+      provide: IMAGE_CONFIG,
+      useValue: {
+        placeholderResolution: 40,
+        resolution: 1,
+      }
     }
   ]
 };

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {HeaderComponent} from "../header/header.component";
 import {MainBannerComponent} from "../main-banner/main-banner.component";
 import {CardComponent} from "../card/card.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, SlicePipe} from "@angular/common";
 import {AnimeCardInterface} from "../shared/interfaces/anime-card.interface";
 import {AnimeService} from "../../services/anime.service";
 import {tap, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {AnimePageComponent} from "../anime-page/anime-page.component";
+import { NgOptimizedImage } from '@angular/common'
 
 
 @Component({
@@ -19,7 +20,9 @@ import {AnimePageComponent} from "../anime-page/anime-page.component";
     CardComponent,
     NgForOf,
     AnimePageComponent,
-    NgIf
+    NgIf,
+    NgOptimizedImage,
+    SlicePipe
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

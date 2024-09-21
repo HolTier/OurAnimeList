@@ -40,14 +40,15 @@
 
 /* Style the modal */
 .anime-page {
-  background-color: #fff;
-  color: #000;
-  padding: 20px;
-  border-radius: 10px;
   width: 80%;
   max-height: 80vh;
-  overflow-y: auto;
   transform: scale(0.8);
   animation: fadeInScale 0.5s ease forwards; /* Apply animation */
+  overflow-y: scroll;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
 }
 
+.anime-page::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}

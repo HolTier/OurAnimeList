@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import {AnimeCardInterface} from "../shared/interfaces/anime-card.interface";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-anime-page',
@@ -9,7 +10,9 @@ import {MatButton} from "@angular/material/button";
   imports: [
     NgOptimizedImage,
     NgIf,
-    MatButton
+    MatButton,
+    MatIcon,
+    MatIconButton
   ],
   templateUrl: './anime-page.component.html',
   styleUrl: './anime-page.component.scss'

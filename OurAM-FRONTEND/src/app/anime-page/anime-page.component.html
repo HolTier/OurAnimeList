@@ -1,10 +1,18 @@
 <div class="anime-details" *ngIf="anime">
+  <!-- Close Button -->
+  <button mat-icon-button class="close-button" (click)="onCloseAnimeDetails()">
+    <mat-icon>close</mat-icon>
+  </button>
+
   <h1>{{ anime.titleEN }}</h1>
   <div class="main-details-container">
     <div class="left-details-container">
+      <!-- Anime Image -->
       <div class="anime-image">
         <img [src]="anime.imageUrl" alt="{{ anime.titleEN }}"/>
       </div>
+
+      <!-- Anime Details -->
       <div class="left-anime-details-info">
         <p>Episodes: {{anime.episodes}}</p>
         <p>Rating: {{anime.rating}}/10</p>
@@ -15,13 +23,12 @@
       </div>
     </div>
 
-
+    <!-- Synopsis and Description -->
     <div class="right-details-container">
       <h2>Synopsis</h2>
       <p>{{anime.shortDescription}}</p>
       <h2>Description</h2>
       <p>{{anime.description}}</p>
-      <button mat-raised-button color="primary" (click)="onCloseAnimeDetails()">Back</button>
     </div>
   </div>
 

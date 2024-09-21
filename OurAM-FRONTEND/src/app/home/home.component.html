@@ -1,6 +1,6 @@
 <!-- Header component -->
+<app-header></app-header>
 <div class="test">
-  <app-header></app-header>
   <app-main-banner></app-main-banner>
 
   <div class="cards-container">
@@ -13,6 +13,12 @@
       [episodes]="anime.episodes"
       (cardClick)="onAnimeSelected(anime)">
     </app-card>
+  </div>
+
+  <div *ngIf="selectedAnime" class="overlay">
+    <div class="anime-page">
+      <app-anime-page [anime]="selectedAnime" (closeAnimePage)="clearSelection()"></app-anime-page>
+    </div>
   </div>
 </div>
 

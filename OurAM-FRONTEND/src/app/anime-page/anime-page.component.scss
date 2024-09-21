@@ -1,0 +1,15 @@
+.anime-image {
+  width: 20%;
+  height: 20%;
+  object-fit: cover;
+}
+
+.anime-page {
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%; /* dostosuj szerokość */
+  max-height: 80vh;
+  overflow-y: auto;
+}

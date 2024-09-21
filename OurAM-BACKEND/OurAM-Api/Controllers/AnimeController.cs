@@ -132,6 +132,15 @@ namespace OurAM_Api.Controllers
 
                 var animeCardList = _mapper.Map<IEnumerable<AnimeCardDTO>>(animeList);
 
+                // Add the genre, studio, anime type, and anime status names to the DTO
+                foreach (var animeCard in animeCardList)
+                {
+                    animeCard.GenreName = _genreService.GetGenreByIdAsync(animeCard.GenreID).Result.Name;
+                    animeCard.StudioName = _studioService.GetStudioByIdAsync(animeCard.StudioID).Result.Name;
+                    animeCard.AnimeTypeName = _animeTypeService.GetAnimeTypeByIdAsync(animeCard.AnimeTypeID).Result.Name;
+                    animeCard.AnimeStatusName = _animeStatusService.GetAnimeStatusByIdAsync(animeCard.AnimeStatusID).Result.Name;
+                }
+
                 return Ok(animeCardList);
             }
             catch (Exception e)

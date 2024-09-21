@@ -28,6 +28,7 @@ export class HomeComponent {
   animeList: AnimeCardInterface[] = [];
   selectedAnime: AnimeCardInterface | null = null;
 
+
   constructor(private animeService: AnimeService) {
   }
 
@@ -65,5 +66,10 @@ export class HomeComponent {
   clearSelection() {
     this.selectedAnime = null;
     document.body.style.overflow = 'auto';
+  }
+
+  // To optimize rendering, use trackBy with ngFor
+  trackByAnime(index: number, anime: AnimeCardInterface) {
+    return anime.id; // Assuming each anime has a unique 'id'
   }
 }

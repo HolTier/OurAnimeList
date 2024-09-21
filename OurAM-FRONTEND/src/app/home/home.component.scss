@@ -10,16 +10,15 @@
   }
 }
 
-.test {
-  height: 1000px;
-  background: linear-gradient(135deg, #13161f, #252c48);
+.home-container {
+  min-height: 100%;
+  background: #252c48;
 }
 
-/* Style the header */
 .cards-container {
   display: flex;
   flex-wrap: wrap; /* Allows cards to wrap onto the next line */
-  justify-content: flex-start; /* Align cards to the left */
+  justify-content: space-evenly;
   gap: 20px; /* Adds space between cards */
   padding: 20px;
 }

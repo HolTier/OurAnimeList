@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OurAM_Api.DTO;
 using OurAM_Api.Models;
 using OurAM_Api.Services;
+using System.Security.Claims;
 
 namespace OurAM_Api.Controllers
 {
@@ -21,7 +23,7 @@ namespace OurAM_Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserAnimeList()
+        public async Task<IActionResult> GetUsersAnimeList()
         {
             try
             {
@@ -63,15 +65,21 @@ namespace OurAM_Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddUserAnimeList([FromBody] UserAnimeListDTO userAnimeListDTO)
         {
             try
             {
+                // Get user id from token
+                int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
                 var userAnimeList = _mapper.Map<UserAnimeList>(userAnimeListDTO);
+
+                userAnimeList.UserId = userId;
 
                 await _userAnimeListService.AddUserAnimeListAsync(userAnimeList);
 
-                return Ok();
+                return Ok(new { message = "User anime list added successfully" });
             }
             catch (Exception e)
             {

@@ -2,7 +2,6 @@
 {
     public class UserAnimeListDTO
     {
-        public int UserId { get; set; }
         public int AnimeId { get; set; }
         public bool IsFavorite { get; set; }
         public string? Status { get; set; }

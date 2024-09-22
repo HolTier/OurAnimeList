@@ -8,5 +8,9 @@
         public string? Status { get; set; }
         public int? Score { get; set; }
         public string? Note { get; set; }
+        public int EpisodeWatched { get; set; }
+        public DateTime? StartWatching { get; set; }
+        public DateTime? FinishWatching { get; set; }
+        public DateTime? DateAdded { get; set; }
     }
 }

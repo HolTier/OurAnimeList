@@ -12,8 +12,8 @@ using OurAM_Api.Data;
 namespace OurAM_Api.Migrations
 {
     [DbContext(typeof(OuramDbContext))]
-    [Migration("20240909091326_AnimeCard")]
-    partial class AnimeCard
+    [Migration("20240923172050_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,14 +166,26 @@ namespace OurAM_Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<DateTime?>("AiredEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("AiredStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AnimeStatusID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AnimeTypeID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Episodes")
                         .HasColumnType("int");
 
-                    b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GenreID")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -181,15 +193,17 @@ namespace OurAM_Api.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("ReleaseDate")
+                    b.Property<string>("RatingRank")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Studio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StudioID")
+                        .HasColumnType("int");
 
                     b.Property<string>("TitleEN")
                         .IsRequired()
@@ -201,7 +215,83 @@ namespace OurAM_Api.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("AnimeStatusID");
+
+                    b.HasIndex("AnimeTypeID");
+
+                    b.HasIndex("GenreID");
+
+                    b.HasIndex("StudioID");
+
                     b.ToTable("Anime");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.AnimeStatus", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AnimeStatuses");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.AnimeType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AnimeType");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.Genre", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.Studio", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Studios");
                 });
 
             modelBuilder.Entity("OurAM_Api.Models.User", b =>
@@ -255,6 +345,10 @@ namespace OurAM_Api.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -286,6 +380,15 @@ namespace OurAM_Api.Migrations
                     b.Property<int>("AnimeId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EpisodeWatched")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FinishWatching")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsFavorite")
                         .HasColumnType("bit");
 
@@ -295,14 +398,36 @@ namespace OurAM_Api.Migrations
                     b.Property<int?>("Score")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("StartWatching")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserAnimeStatusID")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "AnimeId");
 
                     b.HasIndex("AnimeId");
 
+                    b.HasIndex("UserAnimeStatusID");
+
                     b.ToTable("UserAnimeLists");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.UserAnimeStatus", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UserAnimeStatuses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -356,11 +481,52 @@ namespace OurAM_Api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OurAM_Api.Models.Anime", b =>
+                {
+                    b.HasOne("OurAM_Api.Models.AnimeStatus", "AnimeStatus")
+                        .WithMany("Anime")
+                        .HasForeignKey("AnimeStatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OurAM_Api.Models.AnimeType", "AnimeType")
+                        .WithMany("Anime")
+                        .HasForeignKey("AnimeTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OurAM_Api.Models.Genre", "Genre")
+                        .WithMany("Anime")
+                        .HasForeignKey("GenreID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OurAM_Api.Models.Studio", "Studio")
+                        .WithMany("Anime")
+                        .HasForeignKey("StudioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnimeStatus");
+
+                    b.Navigation("AnimeType");
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("Studio");
+                });
+
             modelBuilder.Entity("OurAM_Api.Models.UserAnimeList", b =>
                 {
                     b.HasOne("OurAM_Api.Models.Anime", "Anime")
                         .WithMany("UserAnimeLists")
                         .HasForeignKey("AnimeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OurAM_Api.Models.UserAnimeStatus", "UserAnimeStatus")
+                        .WithMany("UserAnimeLists")
+                        .HasForeignKey("UserAnimeStatusID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -373,6 +539,8 @@ namespace OurAM_Api.Migrations
                     b.Navigation("Anime");
 
                     b.Navigation("User");
+
+                    b.Navigation("UserAnimeStatus");
                 });
 
             modelBuilder.Entity("OurAM_Api.Models.Anime", b =>
@@ -380,7 +548,32 @@ namespace OurAM_Api.Migrations
                     b.Navigation("UserAnimeLists");
                 });
 
+            modelBuilder.Entity("OurAM_Api.Models.AnimeStatus", b =>
+                {
+                    b.Navigation("Anime");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.AnimeType", b =>
+                {
+                    b.Navigation("Anime");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.Genre", b =>
+                {
+                    b.Navigation("Anime");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.Studio", b =>
+                {
+                    b.Navigation("Anime");
+                });
+
             modelBuilder.Entity("OurAM_Api.Models.User", b =>
+                {
+                    b.Navigation("UserAnimeLists");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.UserAnimeStatus", b =>
                 {
                     b.Navigation("UserAnimeLists");
                 });

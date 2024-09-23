@@ -238,6 +238,23 @@ namespace OurAM_Api.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("AnimeStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Name = "Currently Airing"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Name = "Finished Airing"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Name = "Not Yet Aired"
+                        });
                 });
 
             modelBuilder.Entity("OurAM_Api.Models.AnimeType", b =>
@@ -255,6 +272,38 @@ namespace OurAM_Api.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("AnimeType");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Name = "TV"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Name = "OVA"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Name = "Movie"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Name = "Special"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Name = "ONA"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Name = "Music"
+                        });
                 });
 
             modelBuilder.Entity("OurAM_Api.Models.Genre", b =>
@@ -272,6 +321,73 @@ namespace OurAM_Api.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Name = "Action"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Name = "Adventure"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Name = "Comedy"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Name = "Drama"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Name = "Fantasy"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Name = "Magic"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Name = "Mecha"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            Name = "Music"
+                        },
+                        new
+                        {
+                            ID = 9,
+                            Name = "Romance"
+                        },
+                        new
+                        {
+                            ID = 10,
+                            Name = "Sci-Fi"
+                        },
+                        new
+                        {
+                            ID = 11,
+                            Name = "Shounen"
+                        },
+                        new
+                        {
+                            ID = 12,
+                            Name = "Slice of Life"
+                        },
+                        new
+                        {
+                            ID = 13,
+                            Name = "Sports"
+                        });
                 });
 
             modelBuilder.Entity("OurAM_Api.Models.Studio", b =>
@@ -289,6 +405,108 @@ namespace OurAM_Api.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Studios");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Name = "Madhouse"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Name = "Bones"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Name = "Sunrise"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Name = "Toei Animation"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Name = "Studio Ghibli"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Name = "Production I.G"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Name = "J.C. Staff"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            Name = "Kyoto Animation"
+                        },
+                        new
+                        {
+                            ID = 9,
+                            Name = "A-1 Pictures"
+                        },
+                        new
+                        {
+                            ID = 10,
+                            Name = "TMS Entertainment"
+                        },
+                        new
+                        {
+                            ID = 11,
+                            Name = "Wit Studio"
+                        },
+                        new
+                        {
+                            ID = 12,
+                            Name = "White Fox"
+                        },
+                        new
+                        {
+                            ID = 13,
+                            Name = "P.A. Works"
+                        },
+                        new
+                        {
+                            ID = 14,
+                            Name = "Shaft"
+                        },
+                        new
+                        {
+                            ID = 15,
+                            Name = "Trigger"
+                        },
+                        new
+                        {
+                            ID = 16,
+                            Name = "Gonzo"
+                        },
+                        new
+                        {
+                            ID = 17,
+                            Name = "Ufotable"
+                        },
+                        new
+                        {
+                            ID = 18,
+                            Name = "Bee Train"
+                        },
+                        new
+                        {
+                            ID = 19,
+                            Name = "Nippon Animation"
+                        },
+                        new
+                        {
+                            ID = 20,
+                            Name = "Satelight"
+                        });
                 });
 
             modelBuilder.Entity("OurAM_Api.Models.User", b =>
@@ -398,14 +616,60 @@ namespace OurAM_Api.Migrations
                     b.Property<DateTime?>("StartWatching")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserAnimeStatusID")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "AnimeId");
 
                     b.HasIndex("AnimeId");
 
+                    b.HasIndex("UserAnimeStatusID");
+
                     b.ToTable("UserAnimeLists");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.UserAnimeStatus", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UserAnimeStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Status = "Watching"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Status = "Completed"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Status = "On Hold"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Status = "Dropped"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Status = "Plan to Watch"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -502,6 +766,12 @@ namespace OurAM_Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("OurAM_Api.Models.UserAnimeStatus", "UserAnimeStatus")
+                        .WithMany("UserAnimeLists")
+                        .HasForeignKey("UserAnimeStatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("OurAM_Api.Models.User", "User")
                         .WithMany("UserAnimeLists")
                         .HasForeignKey("UserId")
@@ -511,6 +781,8 @@ namespace OurAM_Api.Migrations
                     b.Navigation("Anime");
 
                     b.Navigation("User");
+
+                    b.Navigation("UserAnimeStatus");
                 });
 
             modelBuilder.Entity("OurAM_Api.Models.Anime", b =>
@@ -539,6 +811,11 @@ namespace OurAM_Api.Migrations
                 });
 
             modelBuilder.Entity("OurAM_Api.Models.User", b =>
+                {
+                    b.Navigation("UserAnimeLists");
+                });
+
+            modelBuilder.Entity("OurAM_Api.Models.UserAnimeStatus", b =>
                 {
                     b.Navigation("UserAnimeLists");
                 });

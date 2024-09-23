@@ -6,25 +6,35 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OurAM_Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialIdentityMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Anime",
+                name: "AnimeStatuses",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Anime", x => x.ID);
+                    table.PrimaryKey("PK_AnimeStatuses", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AnimeType",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnimeType", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,6 +60,7 @@ namespace OurAM_Api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Provider = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -68,6 +79,45 @@ namespace OurAM_Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Genres",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Genres", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Studios",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Studios", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAnimeStatuses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAnimeStatuses", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,15 +227,70 @@ namespace OurAM_Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Anime",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TitleEN = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TitleJP = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AiredStart = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AiredEnd = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Rating = table.Column<double>(type: "float", nullable: false),
+                    Episodes = table.Column<int>(type: "int", nullable: false),
+                    RatingRank = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GenreID = table.Column<int>(type: "int", nullable: false),
+                    StudioID = table.Column<int>(type: "int", nullable: false),
+                    AnimeTypeID = table.Column<int>(type: "int", nullable: false),
+                    AnimeStatusID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Anime", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Anime_AnimeStatuses_AnimeStatusID",
+                        column: x => x.AnimeStatusID,
+                        principalTable: "AnimeStatuses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Anime_AnimeType_AnimeTypeID",
+                        column: x => x.AnimeTypeID,
+                        principalTable: "AnimeType",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Anime_Genres_GenreID",
+                        column: x => x.GenreID,
+                        principalTable: "Genres",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Anime_Studios_StudioID",
+                        column: x => x.StudioID,
+                        principalTable: "Studios",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserAnimeLists",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
                     AnimeId = table.Column<int>(type: "int", nullable: false),
                     IsFavorite = table.Column<bool>(type: "bit", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserAnimeStatusID = table.Column<int>(type: "int", nullable: false),
                     Score = table.Column<int>(type: "int", nullable: true),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EpisodeWatched = table.Column<int>(type: "int", nullable: false),
+                    StartWatching = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FinishWatching = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,7 +307,33 @@ namespace OurAM_Api.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserAnimeLists_UserAnimeStatuses_UserAnimeStatusID",
+                        column: x => x.UserAnimeStatusID,
+                        principalTable: "UserAnimeStatuses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Anime_AnimeStatusID",
+                table: "Anime",
+                column: "AnimeStatusID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Anime_AnimeTypeID",
+                table: "Anime",
+                column: "AnimeTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Anime_GenreID",
+                table: "Anime",
+                column: "GenreID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Anime_StudioID",
+                table: "Anime",
+                column: "StudioID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -247,6 +378,11 @@ namespace OurAM_Api.Migrations
                 name: "IX_UserAnimeLists_AnimeId",
                 table: "UserAnimeLists",
                 column: "AnimeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAnimeLists_UserAnimeStatusID",
+                table: "UserAnimeLists",
+                column: "UserAnimeStatusID");
         }
 
         /// <inheritdoc />
@@ -278,6 +414,21 @@ namespace OurAM_Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "UserAnimeStatuses");
+
+            migrationBuilder.DropTable(
+                name: "AnimeStatuses");
+
+            migrationBuilder.DropTable(
+                name: "AnimeType");
+
+            migrationBuilder.DropTable(
+                name: "Genres");
+
+            migrationBuilder.DropTable(
+                name: "Studios");
         }
     }
 }
